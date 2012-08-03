@@ -1,4 +1,14 @@
-martlet
-=======
+Martlet (Apus)
+==============
+Capital attemtion to write programming language.
 
-None actual description at this time
+Goal
+----
+* OOP stack, e.g.:
+    * Classes with multiinheritance
+    * Overridable, overloaded and overplaceable method
+    * Public and protected visibility
+    * Extandable event-driven programming
+    * Anonym function with closures and continues
+    * AOP or metaprogramming
+    * Component-entity

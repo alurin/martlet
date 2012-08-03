@@ -1,3 +1,11 @@
+# CMake files
+CMakeCache.txt
+CMakeFiles
+
+# Directories for result of build
+debug
+release
+
 # Compiled Object files
 *.slo
 *.lo
