@@ -58,6 +58,7 @@ set (SF_VENDOR_PATH         "${APUS_MAIN_DIR}/vendor")
 # project output paths
 set (EXECUTABLE_OUTPUT_PATH "${APUS_BUILD_DIR}/bin")
 set (LIBRARY_OUTPUT_PATH    "${APUS_BUILD_DIR}/lib")
+set (APUS_API_DIR           "${APUS_BUILD_DIR}/doc/api")
 
 # project search paths
 list (APPEND CMAKE_PREFIX_PATH "${APUS_MAIN_DIR}")
@@ -78,3 +79,7 @@ file (GLOB _APUS_INCLUDES ${APUS_INCLUDE_DIR})
 foreach (loop_var IN LISTS _APUS_INCLUDES)
     install (DIRECTORY "${APUS_INCLUDE_DIR}/${loop_var}" DESTINATION "include")
 endforeach (loop_var IN LISTS _APUS_INCLUDES)
+
+# add documentation targets
+configure_file ("Doxyfile.in" "Doxyfile")
+make_directory (${APUS_API_DIR})
