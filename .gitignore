@@ -5,6 +5,8 @@ CMakeFiles
 # Directories for result of build
 debug
 release
+bin
+lib
 
 # Compiled Object files
 *.slo
