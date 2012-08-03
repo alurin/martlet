@@ -1,5 +1,6 @@
-Martlet (Apus)
-==============
+Martlet (Apus) [![Build Status](https://secure.travis-ci.org/alurin/martlet.png?branch=master)](http://travis-ci.org/alurin/martlet)
+====================================================================================================================================
+
 Capital attemtion to write programming language.
 
 Goal
