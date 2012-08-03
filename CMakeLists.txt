@@ -73,6 +73,7 @@ include (DocumentationTargets)
 include_directories (${APUS_INCLUDE_DIR})
 add_subdirectory ("${APUS_SOURCE_DIR}/core")
 add_subdirectory ("${APUS_SOURCE_DIR}/compiler")
+add_subdirectory ("${APUS_MAIN_DIR}/test")
 
 # add install targets
 file (GLOB _APUS_INCLUDES ${APUS_INCLUDE_DIR})
