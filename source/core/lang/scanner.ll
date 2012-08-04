@@ -68,10 +68,47 @@ typedef apus::lang::ApusParser::token_type token_type;
 
  /*** BEGIN RULES ***/
 
+ /* Lexems */
+"for"                   { return token::FOR;        }
+"while"                 { return token::WHILE;      }
+"if"                    { return token::IF;         }
+"elseif"                { return token::ELSEIF;     }
+"else"                  { return token::ELSE;       }
+"try"                   { return token::TRY;        }
+"catch"                 { return token::CATCH;      }
+"finally"               { return token::FINALLY;    }
+"throw"                 { return token::THROW;      }
+
  /* comments and strings */
 "/*"                    { BEGIN(multiline_comment); }
 "//"                    { BEGIN(line_comment);      }
 "#"                     { BEGIN(line_comment);      }
+
+ /* Constants and identifiers */
+[A-Za-z][A-Za-z0-9]* {
+    yylval->stringVal = new std::string(yytext, yyleng);
+    return token::IDENTIFIER;
+}
+
+\$[A-Za-z][A-Za-z0-9_]* {
+    yylval->stringVal = new std::string(yytext+1, yyleng-1);
+    return token::VARIABLE;
+}
+
+[+-]?[0-9]+ {
+    yylval->integerVal = atoi(yytext);
+    return token::INTEGER;
+}
+
+ /* gobble up white-spaces and new lines */
+[ \t]+ {
+    yylloc->step();
+}
+
+[\n\r]+ {
+    yylloc->lines(yyleng);
+    yylloc->step();
+}
 
  /* pass all other characters up to bison */
 . {
@@ -87,7 +124,7 @@ typedef apus::lang::ApusParser::token_type token_type;
 
 <line_comment>{
     [\n\r]+             { yylloc->lines(yyleng); BEGIN(INITIAL); yylloc->step(); }
-    .
+    .                   { /* eat anything that's not a new line */    }
 }
 
  /*** END RULES ***/

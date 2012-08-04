@@ -35,6 +35,22 @@
 #ifndef PARSER_HEADER_H
 # define PARSER_HEADER_H
 
+/* "%code requires" blocks.  */
+
+/* Line 35 of lalr1.cc  */
+#line 7 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
+ /*** C/C++ Declarations ***/
+
+#include "apus/config.hpp"
+#include "apus/lang/exception.hpp"
+#include "apus/lang/statement.hpp"
+#include "apus/lang/expression.hpp"
+
+
+
+
+/* Line 35 of lalr1.cc  */
+#line 54 "/home/alurin/workplace/project/martlet/source/core/lang/parser.hpp"
 
 
 #include <string>
@@ -64,7 +80,7 @@
 namespace apus { namespace lang {
 
 /* Line 35 of lalr1.cc  */
-#line 68 "/home/alurin/workplace/project/martlet/source/core/lang/parser.hpp"
+#line 84 "/home/alurin/workplace/project/martlet/source/core/lang/parser.hpp"
 
   /// A Bison parser.
   class ApusParser
@@ -78,12 +94,16 @@ namespace apus { namespace lang {
 /* Line 35 of lalr1.cc  */
 #line 59 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
 
-    semantic_type() { }
+    std::string*                    stringVal;
+    int32_t                         integerVal;
+    apus::lang::StatementAst*       statement;
+    apus::lang::LeftValueAst*       lvalue;
+    apus::lang::RightValueAst*      rvalue;
 
 
 
 /* Line 35 of lalr1.cc  */
-#line 87 "/home/alurin/workplace/project/martlet/source/core/lang/parser.hpp"
+#line 107 "/home/alurin/workplace/project/martlet/source/core/lang/parser.hpp"
     };
 #else
     typedef YYSTYPE semantic_type;
@@ -97,7 +117,18 @@ namespace apus { namespace lang {
    enum yytokentype {
      END = 0,
      EOL = 258,
-     EXAMPLE = 259
+     IDENTIFIER = 259,
+     VARIABLE = 260,
+     INTEGER = 261,
+     FOR = 262,
+     WHILE = 263,
+     IF = 264,
+     ELSEIF = 265,
+     ELSE = 266,
+     TRY = 267,
+     CATCH = 268,
+     FINALLY = 269,
+     THROW = 270
    };
 
     };
@@ -105,7 +136,7 @@ namespace apus { namespace lang {
     typedef token::yytokentype token_type;
 
     /// Build a parser object.
-    ApusParser (class Driver& driver_yyarg);
+    ApusParser (class Driver& driver_yyarg, class ApusStack& scopeStack_yyarg);
     virtual ~ApusParser ();
 
     /// Parse.
@@ -199,10 +230,10 @@ namespace apus { namespace lang {
     /// - if positive, shift that token.
     /// - if negative, reduce the rule which number is the opposite.
     /// - if zero, do what YYDEFACT says.
-    static const unsigned char yytable_[];
+    static const signed char yytable_[];
     static const signed char yytable_ninf_;
 
-    static const unsigned char yycheck_[];
+    static const signed char yycheck_[];
 
     /// For a state, its accessing symbol.
     static const unsigned char yystos_[];
@@ -272,12 +303,13 @@ namespace apus { namespace lang {
 
     /* User arguments.  */
     class Driver& driver;
+    class ApusStack& scopeStack;
   };
 
 } } // apus::lang
 
 /* Line 35 of lalr1.cc  */
-#line 281 "/home/alurin/workplace/project/martlet/source/core/lang/parser.hpp"
+#line 313 "/home/alurin/workplace/project/martlet/source/core/lang/parser.hpp"
 
 
 

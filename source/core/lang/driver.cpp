@@ -60,7 +60,9 @@ std::string Driver::getStreamName() const
 // parse stream
 Node* Driver::parse()
 {
-    ApusParser parser(*this);
-    parser.parse();
+    ApusStack stack;
+    ApusParser parser(*this, stack);
+    int val = parser.parse();
+    std::cerr << "Parser response: " << val << "\n";
     return 0;
 }

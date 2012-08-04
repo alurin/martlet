@@ -7,4 +7,30 @@
  * Multiline comment
  */
 
-Example
+if ($a) {
+
+}
+
+try {
+
+} catch (Exception $ex) {
+
+} catch {
+
+} else {
+
+} finally {
+
+}
+
+while ($a) {
+
+}
+
+for ($a = 0; $a < $b; ++$a) {
+
+}
+
+for ($a, $b : $b) {
+
+}

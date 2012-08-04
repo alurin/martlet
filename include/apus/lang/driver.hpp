@@ -59,6 +59,15 @@ namespace lang {
         ApusScanner* mLexer;
     };
 
+
+    class ScopeStatementAst;
+    ///
+    class ApusStack {
+    public:
+        ScopeStatementAst* peakScope() const;
+        void pushScope(ScopeStatementAst* scope);
+        ScopeStatementAst* popScope();
+    };
 }}
 
 #endif
