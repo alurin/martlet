@@ -8,10 +8,12 @@
 #include "apus/lang/exception.hpp"
 #include "parser.hpp"
 #include "scanner.h"
+#include "stack.hpp"
 #include <fstream>
 #include <sstream>
 
 using namespace apus;
+using namespace apus::ast;
 using namespace apus::lang;
 
 // Constructor

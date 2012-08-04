@@ -68,8 +68,6 @@ namespace lang {
         /** Enable debug output (via arg_yyout) if compiled into the scanner. */
         void set_debug(bool b);
     };
-
-    apus::lang::Location ylcast(const ApusParser::location_type& l);
 } // namespace lang
 } // namespace apus
 

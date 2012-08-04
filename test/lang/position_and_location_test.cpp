@@ -5,9 +5,9 @@
  *******************************************************************************
  */
 #include "test.h" // Brings in the UnitTest++ framework
-#include "apus/lang/node.hpp"
+#include "apus/location.hpp"
 
-using namespace apus::lang;
+using namespace apus;
 
 TEST(LangPositionTest_0001)
 {

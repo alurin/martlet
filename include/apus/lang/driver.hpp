@@ -7,7 +7,7 @@
 #ifndef _APUS_LANG_DRIVER
 #define _APUS_LANG_DRIVER
 
-#include "apus/lang/node.hpp"
+#include "apus/ast/node.hpp"
 #include <string>
 
 namespace apus {
@@ -35,7 +35,7 @@ namespace lang {
         virtual ~Driver();
 
         /// Parse file
-        Node* parse();
+        ast::Node* parse();
 
         /// Returns stream name
         std::string getStreamName() const;
@@ -57,16 +57,6 @@ namespace lang {
 
         /// Current lexer
         ApusScanner* mLexer;
-    };
-
-
-    class ScopeStatementAst;
-    ///
-    class ApusStack {
-    public:
-        ScopeStatementAst* peakScope() const;
-        void pushScope(ScopeStatementAst* scope);
-        ScopeStatementAst* popScope();
     };
 }}
 

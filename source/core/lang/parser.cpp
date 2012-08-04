@@ -45,18 +45,22 @@
 /* User implementation prologue.  */
 
 /* Line 299 of lalr1.cc  */
-#line 84 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
+#line 85 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
 
 
 #include "apus/lang/driver.hpp"
-#include "apus/lang/loop.hpp"
-#include "apus/lang/variable.hpp"
-#include "apus/lang/constant.hpp"
-#include "apus/lang/scope.hpp"
+#include "apus/ast/loop.hpp"
+#include "apus/ast/variable.hpp"
+#include "apus/ast/constant.hpp"
+#include "apus/ast/scope.hpp"
+#include "stack.hpp"
 #include "scanner.h"
 #include <stdio.h>
 #include <string>
 #include <vector>
+
+using namespace apus;
+using namespace apus::ast;
 
 /* this "connects" the bison parser in the driver to the flex scanner class
  * object. it defines the yylex() function call to pull the next token from the
@@ -69,7 +73,7 @@
 
 
 /* Line 299 of lalr1.cc  */
-#line 73 "/home/alurin/workplace/project/martlet/source/core/lang/parser.cpp"
+#line 77 "/home/alurin/workplace/project/martlet/source/core/lang/parser.cpp"
 
 #ifndef YY_
 # if defined YYENABLE_NLS && YYENABLE_NLS
@@ -155,7 +159,7 @@ do {					\
 namespace apus { namespace lang {
 
 /* Line 382 of lalr1.cc  */
-#line 159 "/home/alurin/workplace/project/martlet/source/core/lang/parser.cpp"
+#line 163 "/home/alurin/workplace/project/martlet/source/core/lang/parser.cpp"
 
   /* Return YYSTR after stripping away unnecessary quotes and
      backslashes, so that it's suitable for yyerror.  The heuristic is
@@ -345,12 +349,13 @@ namespace apus { namespace lang {
 /* Line 565 of lalr1.cc  */
 #line 43 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
 {
+    using namespace apus::ast;
     // initialize the initial location object
     yylloc.begin.filename = yylloc.end.filename = &driver.mStreamName;
 }
 
 /* Line 565 of lalr1.cc  */
-#line 354 "/home/alurin/workplace/project/martlet/source/core/lang/parser.cpp"
+#line 359 "/home/alurin/workplace/project/martlet/source/core/lang/parser.cpp"
 
     /* Initialize the stacks.  The initial state will be pushed in
        yynewstate, since the latter expects the semantical and the
@@ -469,31 +474,31 @@ namespace apus { namespace lang {
 	  case 2:
 
 /* Line 690 of lalr1.cc  */
-#line 110 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
+#line 115 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
     { (yyval.statement) = 0;  }
     break;
 
   case 3:
 
 /* Line 690 of lalr1.cc  */
-#line 111 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
+#line 116 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
     { (yyval.statement) = (yysemantic_stack_[(1) - (1)].statement); }
     break;
 
   case 4:
 
 /* Line 690 of lalr1.cc  */
-#line 113 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
+#line 118 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
     { (yyval.statement) = (yysemantic_stack_[(2) - (1)].statement); }
     break;
 
   case 5:
 
 /* Line 690 of lalr1.cc  */
-#line 118 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
+#line 123 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
     {
                             ScopeStatementAst* parent = scopeStack.peakScope();
-                            ScopeStatementAst* scope  = new ScopeStatementAst(parent, ylcast((yylocation_stack_[(1) - (1)])));
+                            ScopeStatementAst* scope  = new ScopeStatementAst(parent, (yylocation_stack_[(1) - (1)]));
                             scopeStack.pushScope(scope);
                         }
     break;
@@ -501,7 +506,7 @@ namespace apus { namespace lang {
   case 6:
 
 /* Line 690 of lalr1.cc  */
-#line 123 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
+#line 128 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
     {
                             (yyval.statement) = scopeStack.popScope();
                         }
@@ -510,37 +515,37 @@ namespace apus { namespace lang {
   case 13:
 
 /* Line 690 of lalr1.cc  */
-#line 141 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
+#line 146 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
     { (yyval.statement) = new ExpressionStatementAst((yysemantic_stack_[(2) - (1)].rvalue)); }
     break;
 
   case 14:
 
 /* Line 690 of lalr1.cc  */
-#line 142 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
+#line 147 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
     { (yyval.statement) = (yysemantic_stack_[(2) - (1)].statement); }
     break;
 
   case 15:
 
 /* Line 690 of lalr1.cc  */
-#line 148 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
+#line 153 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
     { (yyval.statement) = 0; }
     break;
 
   case 18:
 
 /* Line 690 of lalr1.cc  */
-#line 159 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
+#line 164 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
     { (yyval.rvalue) = 0; }
     break;
 
   case 20:
 
 /* Line 690 of lalr1.cc  */
-#line 172 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
+#line 177 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
     {
-            ForLoopAst* stmt = new ForLoopAst((yysemantic_stack_[(9) - (3)].statement), (yysemantic_stack_[(9) - (5)].rvalue), (yysemantic_stack_[(9) - (7)].statement), ylcast((yylocation_stack_[(9) - (1)])));
+            ForLoopAst* stmt = new ForLoopAst((yysemantic_stack_[(9) - (3)].statement), (yysemantic_stack_[(9) - (5)].rvalue), (yysemantic_stack_[(9) - (7)].statement), (yylocation_stack_[(9) - (1)]));
             stmt->append((yysemantic_stack_[(9) - (9)].statement));
             (yyval.statement) = stmt;
         }
@@ -549,9 +554,9 @@ namespace apus { namespace lang {
   case 21:
 
 /* Line 690 of lalr1.cc  */
-#line 182 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
+#line 187 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
     {
-            WhileLoopAst* stmt = new WhileLoopAst((yysemantic_stack_[(5) - (3)].rvalue), ylcast((yylocation_stack_[(5) - (1)])));
+            WhileLoopAst* stmt = new WhileLoopAst((yysemantic_stack_[(5) - (3)].rvalue), (yylocation_stack_[(5) - (1)]));
             stmt->append((yysemantic_stack_[(5) - (5)].statement));
             (yyval.statement) = stmt;
         }
@@ -560,26 +565,26 @@ namespace apus { namespace lang {
   case 30:
 
 /* Line 690 of lalr1.cc  */
-#line 218 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
-    { (yyval.rvalue) = new AssignAst((yysemantic_stack_[(3) - (1)].lvalue), (yysemantic_stack_[(3) - (3)].rvalue), ylcast((yyloc))); }
+#line 223 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
+    { (yyval.rvalue) = new AssignAst((yysemantic_stack_[(3) - (1)].lvalue), (yysemantic_stack_[(3) - (3)].rvalue), (yyloc)); }
     break;
 
   case 31:
 
 /* Line 690 of lalr1.cc  */
-#line 219 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
+#line 224 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
     { (yyval.rvalue) = (yysemantic_stack_[(1) - (1)].rvalue); }
     break;
 
   case 32:
 
 /* Line 690 of lalr1.cc  */
-#line 224 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
+#line 229 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
     {
                                             VariableAst* var = scopeStack.peakScope()->getVariable(*(yysemantic_stack_[(1) - (1)].stringVal));
                                             yyfree((yysemantic_stack_[(1) - (1)].stringVal));
                                             if (var)
-                                                (yyval.lvalue) = new LVariableAst(var, ylcast((yyloc)));
+                                                (yyval.lvalue) = new LVariableAst(var, (yyloc));
                                             else {
                                                 error((yylocation_stack_[(1) - (1)]), "Variable not defined");
                                                 YYERROR;
@@ -590,12 +595,12 @@ namespace apus { namespace lang {
   case 33:
 
 /* Line 690 of lalr1.cc  */
-#line 238 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
+#line 243 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
     {
                                             VariableAst* var = scopeStack.peakScope()->getVariable(*(yysemantic_stack_[(1) - (1)].stringVal));
                                             yyfree((yysemantic_stack_[(1) - (1)].stringVal));
                                             if (var)
-                                                (yyval.rvalue) = new RVariableAst(var, ylcast((yyloc)));
+                                                (yyval.rvalue) = new RVariableAst(var, (yyloc));
                                             else {
                                                 error((yylocation_stack_[(1) - (1)]), "Variable not defined");
                                                 YYERROR;
@@ -606,14 +611,14 @@ namespace apus { namespace lang {
   case 34:
 
 /* Line 690 of lalr1.cc  */
-#line 248 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
-    { (yyval.rvalue) = new IntegerConstantAst((yysemantic_stack_[(1) - (1)].integerVal), ylcast((yylocation_stack_[(1) - (1)]))); }
+#line 253 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
+    { (yyval.rvalue) = new IntegerConstantAst((yysemantic_stack_[(1) - (1)].integerVal), (yylocation_stack_[(1) - (1)])); }
     break;
 
 
 
 /* Line 690 of lalr1.cc  */
-#line 617 "/home/alurin/workplace/project/martlet/source/core/lang/parser.cpp"
+#line 622 "/home/alurin/workplace/project/martlet/source/core/lang/parser.cpp"
 	default:
           break;
       }
@@ -1055,13 +1060,13 @@ namespace apus { namespace lang {
   };
 
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
-  const unsigned char
+  const unsigned short int
   ApusParser::yyrline_[] =
   {
-         0,   110,   110,   111,   112,   118,   118,   131,   132,   133,
-     134,   135,   136,   141,   142,   148,   149,   154,   159,   160,
-     171,   181,   191,   192,   193,   196,   198,   202,   207,   212,
-     218,   219,   224,   238,   248,   253,   254
+         0,   115,   115,   116,   117,   123,   123,   136,   137,   138,
+     139,   140,   141,   146,   147,   153,   154,   159,   164,   165,
+     176,   186,   196,   197,   198,   201,   203,   207,   212,   217,
+     223,   224,   229,   243,   253,   258,   259
   };
 
   // Print the state stack on the debug stream.
@@ -1152,28 +1157,20 @@ namespace apus { namespace lang {
 } } // apus::lang
 
 /* Line 1136 of lalr1.cc  */
-#line 1156 "/home/alurin/workplace/project/martlet/source/core/lang/parser.cpp"
+#line 1161 "/home/alurin/workplace/project/martlet/source/core/lang/parser.cpp"
 
 
 /* Line 1138 of lalr1.cc  */
-#line 259 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
+#line 264 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
  /*** Additional Code ***/
 
+using namespace apus;
 using namespace apus::lang;
-
-inline Location ylcast(const ApusParser::location_type& l) {
-    Position begin(l.begin.line, l.begin.column);
-    Position end(l.end.line, l.end.column);
-    Location loc(*l.begin.filename, begin, end);
-    return loc;
-}
 
 void ApusParser::error(const ApusParser::location_type& l,
 			    const std::string& m)
 {
     std::cout << l << ": " << m << "\n";
-    String message    = String::fromUTF8(m);
-    Location location = ylcast(l);
-    new LangException(message, location);
+    new LangException(String::fromUTF8(m), l);
 }
 

@@ -7,19 +7,29 @@
 #ifndef _APUS_LANG_LOOP
 #define _APUS_LANG_LOOP
 
-#include "apus/lang/statement.hpp"
+#include "apus/ast/statement.hpp"
 
 namespace apus {
-namespace lang {
+namespace ast {
     class RightValueAst;
 
     class WhileLoopAst : public SequenceStatementAst {
     public:
         WhileLoopAst(RightValueAst* conditional, const Location& loc);
+
+        virtual ~WhileLoopAst();
+    protected:
+        RightValueAst* mConditional;
     };
     class ForLoopAst : public SequenceStatementAst {
     public:
         ForLoopAst(StatementAst* initial, RightValueAst* conditional, StatementAst* after, const Location& loc);
+
+        virtual ~ForLoopAst();
+    protected:
+        StatementAst* mInitial;
+        RightValueAst* mConditional;
+        StatementAst* mAfter;
     };
 }}
 

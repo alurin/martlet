@@ -8,8 +8,8 @@
 
 #include "apus/config.hpp"
 #include "apus/lang/exception.hpp"
-#include "apus/lang/statement.hpp"
-#include "apus/lang/expression.hpp"
+#include "apus/ast/statement.hpp"
+#include "apus/ast/expression.hpp"
 
 }
 
@@ -41,6 +41,7 @@
 %locations
 %initial-action
 {
+    using namespace apus::ast;
     // initialize the initial location object
     @$.begin.filename = @$.end.filename = &driver.mStreamName;
 };
@@ -57,11 +58,11 @@
  /*** BEGIN EXAMPLE - Change the example grammar's tokens below ***/
 
 %union {
-    std::string*                    stringVal;
-    int32_t                         integerVal;
-    apus::lang::StatementAst*       statement;
-    apus::lang::LeftValueAst*       lvalue;
-    apus::lang::RightValueAst*      rvalue;
+    std::string*                stringVal;
+    int32_t                     integerVal;
+    apus::ast::StatementAst*    statement;
+    apus::ast::LeftValueAst*    lvalue;
+    apus::ast::RightValueAst*   rvalue;
 }
 
 %token                  END             0   "end of file"
@@ -84,14 +85,18 @@
 %{
 
 #include "apus/lang/driver.hpp"
-#include "apus/lang/loop.hpp"
-#include "apus/lang/variable.hpp"
-#include "apus/lang/constant.hpp"
-#include "apus/lang/scope.hpp"
+#include "apus/ast/loop.hpp"
+#include "apus/ast/variable.hpp"
+#include "apus/ast/constant.hpp"
+#include "apus/ast/scope.hpp"
+#include "stack.hpp"
 #include "scanner.h"
 #include <stdio.h>
 #include <string>
 #include <vector>
+
+using namespace apus;
+using namespace apus::ast;
 
 /* this "connects" the bison parser in the driver to the flex scanner class
  * object. it defines the yylex() function call to pull the next token from the
@@ -117,7 +122,7 @@ statements
 scope
     : '{'               {
                             ScopeStatementAst* parent = scopeStack.peakScope();
-                            ScopeStatementAst* scope  = new ScopeStatementAst(parent, ylcast(@1));
+                            ScopeStatementAst* scope  = new ScopeStatementAst(parent, @1);
                             scopeStack.pushScope(scope);
                         }
         statements '}'  {
@@ -170,7 +175,7 @@ empty_expression
 for_loop
     : FOR '(' empty_statement ';' empty_conditional ';' empty_statement ')' statements
         {
-            ForLoopAst* stmt = new ForLoopAst($3, $5, $7, ylcast(@1));
+            ForLoopAst* stmt = new ForLoopAst($3, $5, $7, @1);
             stmt->append($9);
             $$ = stmt;
         }
@@ -180,7 +185,7 @@ for_loop
 while_loop
     : WHILE '(' conditional ')' statements
         {
-            WhileLoopAst* stmt = new WhileLoopAst($3, ylcast(@1));
+            WhileLoopAst* stmt = new WhileLoopAst($3, @1);
             stmt->append($5);
             $$ = stmt;
         }
@@ -215,7 +220,7 @@ exception_statement
 /** EXPRESSIONS **/
 %type <rvalue> expression;
 expression
-    : lvalue '=' expression             { $$ = new AssignAst($1, $3, ylcast(@$)); }
+    : lvalue '=' expression             { $$ = new AssignAst($1, $3, @$); }
     | rvalue                            { $$ = $1; }
     ;
 
@@ -225,7 +230,7 @@ lvalue
                                             VariableAst* var = scopeStack.peakScope()->getVariable(*$1);
                                             yyfree($1);
                                             if (var)
-                                                $$ = new LVariableAst(var, ylcast(@$));
+                                                $$ = new LVariableAst(var, @$);
                                             else {
                                                 error(@1, "Variable not defined");
                                                 YYERROR;
@@ -239,13 +244,13 @@ rvalue
                                             VariableAst* var = scopeStack.peakScope()->getVariable(*$1);
                                             yyfree($1);
                                             if (var)
-                                                $$ = new RVariableAst(var, ylcast(@$));
+                                                $$ = new RVariableAst(var, @$);
                                             else {
                                                 error(@1, "Variable not defined");
                                                 YYERROR;
                                             }
                                         }
-    | INTEGER                           { $$ = new IntegerConstantAst($1, ylcast(@1)); }
+    | INTEGER                           { $$ = new IntegerConstantAst($1, @1); }
     ;
 
 /** START POINT **/
@@ -258,20 +263,12 @@ start
 
 %% /*** Additional Code ***/
 
+using namespace apus;
 using namespace apus::lang;
-
-inline Location ylcast(const ApusParser::location_type& l) {
-    Position begin(l.begin.line, l.begin.column);
-    Position end(l.end.line, l.end.column);
-    Location loc(*l.begin.filename, begin, end);
-    return loc;
-}
 
 void ApusParser::error(const ApusParser::location_type& l,
 			    const std::string& m)
 {
     std::cout << l << ": " << m << "\n";
-    String message    = String::fromUTF8(m);
-    Location location = ylcast(l);
-    new LangException(message, location);
+    new LangException(String::fromUTF8(m), l);
 }

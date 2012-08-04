@@ -4,43 +4,12 @@
  *      MIT license. All Rights Reserved.
  *******************************************************************************
  */
-#include "apus/lang/node.hpp"
+#include "apus/location.hpp"
+#include "lang/location.hh"
 
 using namespace apus;
-using namespace apus::lang;
 
 // position constructor
-Position::Position()
-: mLine(0), mColumn(0) { }
-
-// position constructor
-Position::Position(int32_t line, int32_t column)
-: mLine(line), mColumn(column) { }
-
-// returns line
-int32_t Position::getLine() const
-{
-    return mLine;
-}
-
-// set line
-void Position::setLine(int32_t line)
-{
-    mLine = line;
-}
-
-// returns column
-int32_t Position::getColumn() const
-{
-    return mColumn;
-}
-
-// set column
-void Position::setColumn(int32_t column)
-{
-    mColumn = column;
-}
-
 // location constructor
 Location::Location()
 { }
@@ -52,6 +21,11 @@ Location::Location(const Path& filename)
 // location constructor
 Location::Location(const Path& filename, const Position& begin, const Position& end)
 : mFilename(filename), mBegin(begin), mEnd(end) { }
+
+// hack location constructor
+Location::Location(const lang::location& l)
+: mFilename(*l.begin.filename), mBegin(l.begin.line, l.begin.column), mEnd(l.end.line, l.end.column)
+{ }
 
 // returns stream name
 Path Location::getFilename() const
@@ -87,24 +61,4 @@ Position Location::getEnd() const
 void Location::setEnd(Position end)
 {
     mEnd = end;
-}
-
-// node constructor
-Node::Node(Location& location)
-: mLocation(location) { }
-
-// node destructor
-Node::~Node()
-{ }
-
-// returns location
-Location Node::getLocation() const
-{
-    return mLocation;
-}
-
-// set location
-void Node::setLocation(const Location& location)
-{
-    mLocation = location;
 }

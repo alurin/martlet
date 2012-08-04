@@ -43,8 +43,8 @@
 
 #include "apus/config.hpp"
 #include "apus/lang/exception.hpp"
-#include "apus/lang/statement.hpp"
-#include "apus/lang/expression.hpp"
+#include "apus/ast/statement.hpp"
+#include "apus/ast/expression.hpp"
 
 
 
@@ -92,13 +92,13 @@ namespace apus { namespace lang {
     {
 
 /* Line 35 of lalr1.cc  */
-#line 59 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
+#line 60 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
 
-    std::string*                    stringVal;
-    int32_t                         integerVal;
-    apus::lang::StatementAst*       statement;
-    apus::lang::LeftValueAst*       lvalue;
-    apus::lang::RightValueAst*      rvalue;
+    std::string*                stringVal;
+    int32_t                     integerVal;
+    apus::ast::StatementAst*    statement;
+    apus::ast::LeftValueAst*    lvalue;
+    apus::ast::RightValueAst*   rvalue;
 
 
 
@@ -259,7 +259,7 @@ namespace apus { namespace lang {
     /// For each rule, the index of the first RHS symbol in \a yyrhs_.
     static const unsigned char yyprhs_[];
     /// For each rule, its source line number.
-    static const unsigned char yyrline_[];
+    static const unsigned short int yyrline_[];
     /// For each scanner token number, its symbol number.
     static const unsigned short int yytoken_number_[];
     /// Report on the debug stream that the rule \a r is going to be reduced.

@@ -8,7 +8,7 @@
 #define _APUS_LANG_EXCEPTION
 
 #include "apus/exception.hpp"
-#include "apus/lang/node.hpp"
+#include "apus/location.hpp"
 
 namespace apus {
 namespace lang {
