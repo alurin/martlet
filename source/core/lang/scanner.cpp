@@ -495,8 +495,8 @@ static yyconst flex_int16_t yy_rule_linenum[2] =
 #line 1 "/home/alurin/workplace/project/martlet/source/core/lang/scanner.ll"
 /*
  *******************************************************************************
- *   Copyright (C) 2012 Vasiliy Sheredeko
- *   MIT license. All Rights Reserved.
+ *      Copyright (C) 2012 Vasiliy Sheredeko
+ *      MIT license. All Rights Reserved.
  *******************************************************************************
  */
 #line 8 "/home/alurin/workplace/project/martlet/source/core/lang/scanner.ll"

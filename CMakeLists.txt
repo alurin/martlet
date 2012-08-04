@@ -71,7 +71,7 @@ include (DocumentationTargets)
 
 # global project dependencies
 set (Boost_ADDITIONAL_VERSIONS "1.46" "1.46.0" "1.47" "1.47.0" "1.48" "1.48.0" "1.49" "1.49.0" "1.50" "1.50.0")
-find_package (Boost 1.37 COMPONENTS "date_time" "filesystem" "graph" "iostreams" "program_options" "regex" "serialization" "signals" "system" "thread" "wserialization" REQUIRED)
+find_package (Boost 1.37 REQUIRED)
 include_directories (${Boost_INCLUDE_DIRS})
 link_directories (${Boost_LIBRARY_DIRS})
 
