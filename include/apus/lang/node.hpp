@@ -97,7 +97,6 @@ namespace lang {
         /// Location of node
         Location mLocation;
     };
-
 }}
 
 #endif
