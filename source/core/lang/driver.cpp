@@ -62,6 +62,5 @@ Node* Driver::parse()
 {
     ApusParser parser(*this);
     parser.parse();
-    this->mLexer = 0;
     return 0;
 }

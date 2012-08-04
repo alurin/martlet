@@ -62,7 +62,8 @@
 
 %token                  END             0   "end of file"
 %token                  EOL                 "end of line"
-%token                  UNIX_SCRIPT         "unix script"
+%token                  EXAMPLE             "example"
+
 
  /*** END EXAMPLE - Change the example grammar's tokens above ***/
 
@@ -87,7 +88,7 @@
 /** START POINT **/
 start
     : /* empty */
-    | END
+    | EXAMPLE END
     ;
 
 /*** END GRAMAR - Change the example grammar rules above ***/

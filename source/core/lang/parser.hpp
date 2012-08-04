@@ -97,7 +97,7 @@ namespace apus { namespace lang {
    enum yytokentype {
      END = 0,
      EOL = 258,
-     UNIX_SCRIPT = 259
+     EXAMPLE = 259
    };
 
     };

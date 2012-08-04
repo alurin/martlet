@@ -53,7 +53,7 @@ typedef apus::lang::ApusParser::token_type token_type;
 %}
 
 /* States */
-%x comment
+%x multiline_comment
 %x line_comment
 %x string_state
 %x char_state
@@ -68,9 +68,26 @@ typedef apus::lang::ApusParser::token_type token_type;
 
  /*** BEGIN RULES ***/
 
+ /* comments and strings */
+"/*"                    { BEGIN(multiline_comment); }
+"//"                    { BEGIN(line_comment);      }
+"#"                     { BEGIN(line_comment);      }
+
  /* pass all other characters up to bison */
 . {
     return static_cast<token_type>(*yytext);
+}
+
+<multiline_comment>{
+    [^*\n]*             { /* eat anything that's not a '*' */    }
+    "*"+[^*/\n]*        { /* eat up '*'s not followed by '/'s */ }
+    [\n\r]+             { yylloc->lines(yyleng); yylloc->step(); }
+    "*"+"/"             { BEGIN(INITIAL);  yylloc->step();       }
+}
+
+<line_comment>{
+    [\n\r]+             { yylloc->lines(yyleng); BEGIN(INITIAL); yylloc->step(); }
+    .
 }
 
  /*** END RULES ***/

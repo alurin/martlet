@@ -406,8 +406,8 @@ typedef unsigned char YY_CHAR;
 	(yy_c_buf_p) = yy_cp;
 
 /* %% [4.0] data tables for the DFA and the user's section 1 definitions go here */
-#define YY_NUM_RULES 2
-#define YY_END_OF_BUFFER 3
+#define YY_NUM_RULES 11
+#define YY_END_OF_BUFFER 12
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -415,19 +415,21 @@ struct yy_trans_info
 	flex_int32_t yy_verify;
 	flex_int32_t yy_nxt;
 	};
-static yyconst flex_int16_t yy_accept[15] =
+static yyconst flex_int16_t yy_accept[33] =
     {   0,
-        0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-        3,    1,    2,    0
+        0,    0,    5,    5,    0,    0,    0,    0,    0,    0,
+       12,    4,   11,    3,    4,    5,    7,    5,    6,   10,
+        9,    9,    1,    2,    5,    7,    5,    6,    6,    8,
+        9,    0
     } ;
 
 static yyconst flex_int32_t yy_ec[256] =
     {   0,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    2,
+        1,    1,    3,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    4,    1,    1,    1,    1,    1,
+        1,    5,    1,    1,    1,    1,    6,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
@@ -453,36 +455,50 @@ static yyconst flex_int32_t yy_ec[256] =
         1,    1,    1,    1,    1
     } ;
 
-static yyconst flex_int32_t yy_meta[3] =
+static yyconst flex_int32_t yy_meta[7] =
     {   0,
-        1,    1
+        1,    2,    3,    1,    4,    5
     } ;
 
-static yyconst flex_int16_t yy_base[15] =
+static yyconst flex_int16_t yy_base[40] =
     {   0,
-        0,    0,    3,    0,    0,    0,    0,    0,    0,    0,
-        3,    5,    5,    5
+        0,    0,    6,    0,   11,   13,    0,    0,    0,    0,
+       36,   52,   52,   52,   12,    0,    0,   17,   16,   52,
+        0,    0,   52,   52,    0,    0,    0,    0,   18,   52,
+        0,   52,   24,   29,   34,   38,   41,   45,   48
     } ;
 
-static yyconst flex_int16_t yy_def[15] =
+static yyconst flex_int16_t yy_def[40] =
     {   0,
-       14,    1,    1,    3,    3,    3,    3,    3,    3,    3,
-       14,   14,   14,    0
+       32,    1,   32,    3,   33,   33,   34,   34,   34,   34,
+       32,   32,   32,   32,   32,   35,   36,   35,   37,   32,
+       38,   38,   32,   32,   35,   36,   18,   39,   39,   32,
+       38,    0,   32,   32,   32,   32,   32,   32,   32
     } ;
 
-static yyconst flex_int16_t yy_nxt[8] =
+static yyconst flex_int16_t yy_nxt[59] =
     {   0,
-       12,   13,   14,   13,   11,   14,   14
+       12,   13,   12,   14,   12,   15,   16,   17,   18,   16,
+       19,   16,   21,   22,   21,   22,   23,   24,   26,   27,
+       29,   30,   29,   30,   20,   20,   20,   20,   20,   13,
+       13,   13,   13,   13,   25,   32,   25,   32,   25,   26,
+       26,   28,   32,   28,   28,   28,   31,   31,   28,   32,
+       28,   11,   32,   32,   32,   32,   32,   32
     } ;
 
-static yyconst flex_int16_t yy_chk[8] =
+static yyconst flex_int16_t yy_chk[59] =
     {   0,
-        1,    1,   11,    3,   14,   14,   14
+        1,    1,    1,    1,    1,    1,    3,    3,    3,    3,
+        3,    3,    5,    5,    6,    6,   15,   15,   18,   18,
+       19,   19,   29,   29,   33,   33,   33,   33,   33,   34,
+       34,   34,   34,   34,   35,   11,   35,    0,   35,   36,
+       36,   37,    0,   37,   37,   37,   38,   38,   39,    0,
+       39,   32,   32,   32,   32,   32,   32,   32
     } ;
 
-static yyconst flex_int16_t yy_rule_linenum[2] =
+static yyconst flex_int16_t yy_rule_linenum[11] =
     {   0,
-       72
+       72,   73,   74,   77,   82,   83,   84,   85,   89,   90
     } ;
 
 /* The intent behind this definition is that it'll catch
@@ -535,10 +551,10 @@ typedef apus::lang::ApusParser::token_type token_type;
 
 
 
-#line 539 "/home/alurin/workplace/project/martlet/source/core/lang/scanner.cpp"
+#line 555 "/home/alurin/workplace/project/martlet/source/core/lang/scanner.cpp"
 
 #define INITIAL 0
-#define comment 1
+#define multiline_comment 1
 #define line_comment 2
 #define string_state 3
 #define char_state 4
@@ -712,8 +728,8 @@ YY_DECL
 
  /*** BEGIN RULES ***/
 
- /* pass all other characters up to bison */
-#line 717 "/home/alurin/workplace/project/martlet/source/core/lang/scanner.cpp"
+ /* comments and strings */
+#line 733 "/home/alurin/workplace/project/martlet/source/core/lang/scanner.cpp"
 
 	if ( !(yy_init) )
 		{
@@ -776,13 +792,13 @@ yy_match:
 			while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 				{
 				yy_current_state = (int) yy_def[yy_current_state];
-				if ( yy_current_state >= 15 )
+				if ( yy_current_state >= 33 )
 					yy_c = yy_meta[(unsigned int) yy_c];
 				}
 			yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
 			++yy_cp;
 			}
-		while ( yy_current_state != 14 );
+		while ( yy_current_state != 32 );
 		yy_cp = (yy_last_accepting_cpos);
 		yy_current_state = (yy_last_accepting_state);
 
@@ -801,12 +817,12 @@ do_action:	/* This label is used only to access EOF actions. */
 			{
 			if ( yy_act == 0 )
 				std::cerr << "--scanner backing up\n";
-			else if ( yy_act < 2 )
+			else if ( yy_act < 11 )
 				std::cerr << "--accepting rule at line " << yy_rule_linenum[yy_act] <<
 				         "(\"" << yytext << "\")\n";
-			else if ( yy_act == 2 )
+			else if ( yy_act == 11 )
 				std::cerr << "--accepting default rule (\"" << yytext << "\")\n";
-			else if ( yy_act == 3 )
+			else if ( yy_act == 12 )
 				std::cerr << "--(end of buffer or a NUL)\n";
 			else
 				std::cerr << "--EOF (start condition " << YY_START << ")\n";
@@ -825,19 +841,71 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 YY_RULE_SETUP
 #line 72 "/home/alurin/workplace/project/martlet/source/core/lang/scanner.ll"
+{ BEGIN(multiline_comment); }
+	YY_BREAK
+case 2:
+YY_RULE_SETUP
+#line 73 "/home/alurin/workplace/project/martlet/source/core/lang/scanner.ll"
+{ BEGIN(line_comment);      }
+	YY_BREAK
+case 3:
+YY_RULE_SETUP
+#line 74 "/home/alurin/workplace/project/martlet/source/core/lang/scanner.ll"
+{ BEGIN(line_comment);      }
+	YY_BREAK
+/* pass all other characters up to bison */
+case 4:
+YY_RULE_SETUP
+#line 77 "/home/alurin/workplace/project/martlet/source/core/lang/scanner.ll"
 {
     return static_cast<token_type>(*yytext);
 }
 	YY_BREAK
-/*** END RULES ***/
-case 2:
+
+case 5:
 YY_RULE_SETUP
-#line 78 "/home/alurin/workplace/project/martlet/source/core/lang/scanner.ll"
+#line 82 "/home/alurin/workplace/project/martlet/source/core/lang/scanner.ll"
+{ /* eat anything that's not a '*' */    }
+	YY_BREAK
+case 6:
+YY_RULE_SETUP
+#line 83 "/home/alurin/workplace/project/martlet/source/core/lang/scanner.ll"
+{ /* eat up '*'s not followed by '/'s */ }
+	YY_BREAK
+case 7:
+/* rule 7 can match eol */
+YY_RULE_SETUP
+#line 84 "/home/alurin/workplace/project/martlet/source/core/lang/scanner.ll"
+{ yylloc->lines(yyleng); yylloc->step(); }
+	YY_BREAK
+case 8:
+YY_RULE_SETUP
+#line 85 "/home/alurin/workplace/project/martlet/source/core/lang/scanner.ll"
+{ BEGIN(INITIAL);  yylloc->step();       }
+	YY_BREAK
+
+
+case 9:
+/* rule 9 can match eol */
+YY_RULE_SETUP
+#line 89 "/home/alurin/workplace/project/martlet/source/core/lang/scanner.ll"
+{ yylloc->lines(yyleng); BEGIN(INITIAL); yylloc->step(); }
+	YY_BREAK
+case 10:
+YY_RULE_SETUP
+#line 90 "/home/alurin/workplace/project/martlet/source/core/lang/scanner.ll"
+
+	YY_BREAK
+
+/*** END RULES ***/
+case 11:
+YY_RULE_SETUP
+#line 95 "/home/alurin/workplace/project/martlet/source/core/lang/scanner.ll"
 ECHO;
 	YY_BREAK
-#line 839 "/home/alurin/workplace/project/martlet/source/core/lang/scanner.cpp"
+#line 907 "/home/alurin/workplace/project/martlet/source/core/lang/scanner.cpp"
 case YY_STATE_EOF(INITIAL):
-case YY_STATE_EOF(comment):
+case YY_STATE_EOF(multiline_comment):
 case YY_STATE_EOF(line_comment):
 case YY_STATE_EOF(string_state):
 case YY_STATE_EOF(char_state):
@@ -1241,7 +1309,7 @@ int yyFlexLexer::yy_get_next_buffer()
 		while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 			{
 			yy_current_state = (int) yy_def[yy_current_state];
-			if ( yy_current_state >= 15 )
+			if ( yy_current_state >= 33 )
 				yy_c = yy_meta[(unsigned int) yy_c];
 			}
 		yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
@@ -1274,11 +1342,11 @@ int yyFlexLexer::yy_get_next_buffer()
 	while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 		{
 		yy_current_state = (int) yy_def[yy_current_state];
-		if ( yy_current_state >= 15 )
+		if ( yy_current_state >= 33 )
 			yy_c = yy_meta[(unsigned int) yy_c];
 		}
 	yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
-	yy_is_jam = (yy_current_state == 14);
+	yy_is_jam = (yy_current_state == 32);
 
 	return yy_is_jam ? 0 : yy_current_state;
 }
@@ -1888,7 +1956,7 @@ void Apusfree (void * ptr )
 
 /* %ok-for-header */
 
-#line 78 "/home/alurin/workplace/project/martlet/source/core/lang/scanner.ll"
+#line 95 "/home/alurin/workplace/project/martlet/source/core/lang/scanner.ll"
 
 
 

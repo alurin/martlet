@@ -56,7 +56,7 @@
 /* User implementation prologue.  */
 
 /* Line 299 of lalr1.cc  */
-#line 69 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
+#line 70 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
 
 
 #include "apus/lang/driver.hpp"
@@ -746,11 +746,11 @@ namespace apus { namespace lang {
 
   /* YYPACT[STATE-NUM] -- Index in YYTABLE of the portion describing
      STATE-NUM.  */
-  const signed char ApusParser::yypact_ninf_ = -1;
+  const signed char ApusParser::yypact_ninf_ = -5;
   const signed char
   ApusParser::yypact_[] =
   {
-         0,    -1,     1,    -1
+        -4,     1,     2,    -5,    -5
   };
 
   /* YYDEFACT[S] -- default reduction number in state S.  Performed when
@@ -759,14 +759,14 @@ namespace apus { namespace lang {
   const unsigned char
   ApusParser::yydefact_[] =
   {
-         0,     3,     0,     1
+         2,     0,     0,     3,     1
   };
 
   /* YYPGOTO[NTERM-NUM].  */
   const signed char
   ApusParser::yypgoto_[] =
   {
-        -1,    -1
+        -5,    -5
   };
 
   /* YYDEFGOTO[NTERM-NUM].  */
@@ -783,14 +783,14 @@ namespace apus { namespace lang {
   const unsigned char
   ApusParser::yytable_[] =
   {
-         1,     3
+         1,     3,     4
   };
 
   /* YYCHECK.  */
   const unsigned char
   ApusParser::yycheck_[] =
   {
-         0,     0
+         4,     0,     0
   };
 
   /* STOS_[STATE-NUM] -- The (internal number of the) accessing
@@ -798,7 +798,7 @@ namespace apus { namespace lang {
   const unsigned char
   ApusParser::yystos_[] =
   {
-         0,     0,     6,     0
+         0,     4,     6,     0,     0
   };
 
 #if YYDEBUG
@@ -822,7 +822,7 @@ namespace apus { namespace lang {
   const unsigned char
   ApusParser::yyr2_[] =
   {
-         0,     2,     0,     1
+         0,     2,     0,     2
   };
 
 #if YYDEBUG || YYERROR_VERBOSE || YYTOKEN_TABLE
@@ -832,7 +832,7 @@ namespace apus { namespace lang {
   const ApusParser::yytname_[] =
   {
     "\"end of file\"", "error", "$undefined", "\"end of line\"",
-  "\"unix script\"", "$accept", "start", 0
+  "\"example\"", "$accept", "start", 0
   };
 #endif
 
@@ -841,7 +841,7 @@ namespace apus { namespace lang {
   const ApusParser::rhs_number_type
   ApusParser::yyrhs_[] =
   {
-         6,     0,    -1,    -1,     0,    -1
+         6,     0,    -1,    -1,     4,     0,    -1
   };
 
   /* YYPRHS[YYN] -- Index of the first RHS symbol of rule number YYN in
@@ -856,7 +856,7 @@ namespace apus { namespace lang {
   const unsigned char
   ApusParser::yyrline_[] =
   {
-         0,    88,    88,    90
+         0,    89,    89,    91
   };
 
   // Print the state stack on the debug stream.
@@ -930,10 +930,10 @@ namespace apus { namespace lang {
   }
 
   const int ApusParser::yyeof_ = 0;
-  const int ApusParser::yylast_ = 1;
+  const int ApusParser::yylast_ = 2;
   const int ApusParser::yynnts_ = 2;
   const int ApusParser::yyempty_ = -2;
-  const int ApusParser::yyfinal_ = 3;
+  const int ApusParser::yyfinal_ = 4;
   const int ApusParser::yyterror_ = 1;
   const int ApusParser::yyerrcode_ = 256;
   const int ApusParser::yyntokens_ = 5;
@@ -949,7 +949,7 @@ namespace apus { namespace lang {
 
 
 /* Line 1138 of lalr1.cc  */
-#line 95 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
+#line 96 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
  /*** Additional Code ***/
 
 using namespace apus::lang;

@@ -1,1 +1,10 @@
 #!bin/apusc
+
+// Line comment
+# Line comment
+/* Multiline comment
+ * Multiline comment
+ * Multiline comment
+ */
+
+Example
