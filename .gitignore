@@ -24,3 +24,4 @@ doc/api
 
 # Generated Files
 source/core/lang/parser.output
+include/apus/platform.hpp

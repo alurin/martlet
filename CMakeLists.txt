@@ -97,6 +97,9 @@ find_package (ICU REQUIRED data uc io)
 include_directories (${ICU_INCLUDE_DIRS})
 link_directories (${ICU_LIBRARIES} ${ICU_I18N_LIBRARIES})
 
+# configure platform settings
+configure_file ("${APUS_INCLUDE_DIR}/apus/platform.hpp.in" "${APUS_INCLUDE_DIR}/apus/platform.hpp")
+
 # include subdirectories
 include_directories (${APUS_INCLUDE_DIR})
 add_subdirectory ("${APUS_SOURCE_DIR}/core")
