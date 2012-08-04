@@ -7,6 +7,7 @@
 %{ /*** C/C++ Declarations ***/
 
 #include "apus/config.hpp"
+#include "apus/lang/exception.hpp"
 #include <stdio.h>
 #include <string>
 #include <vector>
@@ -55,7 +56,9 @@
 
  /*** BEGIN EXAMPLE - Change the example grammar's tokens below ***/
 
-%union { }
+%union {
+    semantic_type() { }
+}
 
 %token                  END             0   "end of file"
 %token                  EOL                 "end of line"
@@ -91,8 +94,19 @@ start
 
 %% /*** Additional Code ***/
 
-void apus::lang::ApusParser::error(const ApusParser::location_type& l,
+using namespace apus::lang;
+
+Location cast_to_location(const ApusParser::location_type& l) {
+    Position begin(l.begin.line, l.begin.column);
+    Position end(l.end.line, l.end.column);
+    Location loc(*l.begin.filename, begin, end);
+    return loc;
+}
+
+void ApusParser::error(const ApusParser::location_type& l,
 			    const std::string& m)
 {
-    // driver.error(l, m);
+    String message    = String::fromUTF8(m);
+    Location location = cast_to_location(l);
+    new LangException(message, location);
 }

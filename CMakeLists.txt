@@ -50,6 +50,29 @@ else (Debug OR  _TYPE STREQUAL "DEBUG")
 endif (Debug OR  _TYPE STREQUAL "DEBUG")
 set (APUS_BUILD_DIR "${APUS_MAIN_DIR}")
 
+# compiler options for GNU C++
+if (CMAKE_COMPILER_IS_GNUCC)
+    # c++11x mode
+    execute_process(COMMAND ${CMAKE_CXX_COMPILER} -dumpversion OUTPUT_VARIABLE GCC_VERSION)
+    if (GCC_VERSION VERSION_GREATER 4.7 OR GCC_VERSION VERSION_EQUAL 4.7)
+        set (CMAKE_CXX_FLAGS   "${CMAKE_CXX_FLAGS} -std=c++11x")
+    else (GCC_VERSION VERSION_GREATER 4.7 OR GCC_VERSION VERSION_EQUAL 4.7)
+        set (CMAKE_CXX_FLAGS   "${CMAKE_CXX_FLAGS} -std=c++0x")
+    endif (GCC_VERSION VERSION_GREATER 4.7 OR GCC_VERSION VERSION_EQUAL 4.7)
+
+    # add compile flags for debug mode
+    set (CMAKE_C_FLAGS_DEBUG   "${CMAKE_C_FLAGS_DEBUG}   -g3 -gdwarf-2 -g -O0 -Wall")
+    set (CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g3 -gdwarf-2 -g -O0 -Wall")
+else (CMAKE_CXX_COMPILER_ID MATCHES "clang")
+    # add_definitions ("-std=c++0x -stdlib=libc++")
+    add_definitions ("-std=c++0x")
+    set (CMAKE_C_FLAGS_DEBUG   "${CMAKE_C_FLAGS_DEBUG}   -g3 -gdwarf-2 -g -O0 -Wall")
+    set (CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g3 -gdwarf-2 -g -O0 -Wall")
+endif (CMAKE_COMPILER_IS_GNUCC)
+
+# compiler options for Clang++
+
+
 # project input paths
 set (APUS_INCLUDE_DIR       "${APUS_MAIN_DIR}/include")
 set (APUS_SOURCE_DIR        "${APUS_MAIN_DIR}/source")
@@ -70,12 +93,7 @@ include (UninstallTarget)
 include (DocumentationTargets)
 
 # global project dependencies
-set (Boost_ADDITIONAL_VERSIONS "1.46" "1.46.0" "1.47" "1.47.0" "1.48" "1.48.0" "1.49" "1.49.0" "1.50" "1.50.0")
-find_package (Boost 1.37 REQUIRED)
-include_directories (${Boost_INCLUDE_DIRS})
-link_directories (${Boost_LIBRARY_DIRS})
-
-find_package (ICU REQUIRED)
+find_package (ICU REQUIRED data uc io)
 include_directories (${ICU_INCLUDE_DIRS})
 link_directories (${ICU_LIBRARIES} ${ICU_I18N_LIBRARIES})
 

@@ -6,11 +6,46 @@
  */
 #include "apus/lang/exception.hpp"
 #include "location.hh"
+#include <unicode/ustream.h>
 
 using namespace apus;
 using namespace apus::lang;
 
-/// output core information about exception in stream
+// Constructor
+LangException::LangException()
+{ }
+
+// Constructor
+LangException::LangException(const String& message)
+: Exception(message) { }
+
+// Constructor
+LangException::LangException(const String& message, const Location& location)
+: Exception(message), mLocation(location) { }
+
+// destructor
+LangException::~LangException() throw()
+{ }
+
+// return location of error
+Location LangException::getLocation() const
+{
+    return mLocation;
+}
+
+// set location of error
+void LangException::setLocation(const Location& location)
+{
+    mLocation = location;
+}
+
+// dump error to stream
+void LangException::dump(std::ostream& stream) const
+{
+    stream << getLocation() << ":" << getMessage();
+}
+
+// output core information about exception in stream
 std::ostream& apus::lang::operator<<(std::ostream& stream, const Location& location)
 {
     Position beginR = location.getBegin();
@@ -30,10 +65,10 @@ std::ostream& apus::lang::operator<<(std::ostream& stream, const Location& locat
     loc.begin = begin;
     loc.end   = end;
 
-    stream << loc;
+    return stream << loc;
 }
 
-/// output core information about exception in stream
+// output core information about exception in stream
 std::ostream& apus::lang::operator<<(std::ostream& stream, const Position& posR)
 {
     position pos;
@@ -42,5 +77,5 @@ std::ostream& apus::lang::operator<<(std::ostream& stream, const Position& posR)
     pos.line   = posR.getLine();
     pos.column = posR.getColumn();
 
-    stream << pos;
+    return stream << pos;
 }

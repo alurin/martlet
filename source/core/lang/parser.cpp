@@ -40,6 +40,7 @@
  /*** C/C++ Declarations ***/
 
 #include "apus/config.hpp"
+#include "apus/lang/exception.hpp"
 #include <stdio.h>
 #include <string>
 #include <vector>
@@ -47,7 +48,7 @@
 
 
 /* Line 293 of lalr1.cc  */
-#line 51 "/home/alurin/workplace/project/martlet/source/core/lang/parser.cpp"
+#line 52 "/home/alurin/workplace/project/martlet/source/core/lang/parser.cpp"
 
 
 #include "parser.hpp"
@@ -55,7 +56,7 @@
 /* User implementation prologue.  */
 
 /* Line 299 of lalr1.cc  */
-#line 66 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
+#line 69 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
 
 
 #include "apus/lang/driver.hpp"
@@ -72,7 +73,7 @@
 
 
 /* Line 299 of lalr1.cc  */
-#line 76 "/home/alurin/workplace/project/martlet/source/core/lang/parser.cpp"
+#line 77 "/home/alurin/workplace/project/martlet/source/core/lang/parser.cpp"
 
 #ifndef YY_
 # if defined YYENABLE_NLS && YYENABLE_NLS
@@ -158,7 +159,7 @@ do {					\
 namespace apus { namespace lang {
 
 /* Line 382 of lalr1.cc  */
-#line 162 "/home/alurin/workplace/project/martlet/source/core/lang/parser.cpp"
+#line 163 "/home/alurin/workplace/project/martlet/source/core/lang/parser.cpp"
 
   /* Return YYSTR after stripping away unnecessary quotes and
      backslashes, so that it's suitable for yyerror.  The heuristic is
@@ -345,14 +346,14 @@ namespace apus { namespace lang {
     /* User initialization code.  */
     
 /* Line 565 of lalr1.cc  */
-#line 43 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
+#line 44 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
 {
     // initialize the initial location object
     yylloc.begin.filename = yylloc.end.filename = &driver.mStreamName;
 }
 
 /* Line 565 of lalr1.cc  */
-#line 356 "/home/alurin/workplace/project/martlet/source/core/lang/parser.cpp"
+#line 357 "/home/alurin/workplace/project/martlet/source/core/lang/parser.cpp"
 
     /* Initialize the stacks.  The initial state will be pushed in
        yynewstate, since the latter expects the semantical and the
@@ -471,7 +472,7 @@ namespace apus { namespace lang {
 	
 
 /* Line 690 of lalr1.cc  */
-#line 475 "/home/alurin/workplace/project/martlet/source/core/lang/parser.cpp"
+#line 476 "/home/alurin/workplace/project/martlet/source/core/lang/parser.cpp"
 	default:
           break;
       }
@@ -855,7 +856,7 @@ namespace apus { namespace lang {
   const unsigned char
   ApusParser::yyrline_[] =
   {
-         0,    85,    85,    87
+         0,    88,    88,    90
   };
 
   // Print the state stack on the debug stream.
@@ -944,16 +945,27 @@ namespace apus { namespace lang {
 } } // apus::lang
 
 /* Line 1136 of lalr1.cc  */
-#line 948 "/home/alurin/workplace/project/martlet/source/core/lang/parser.cpp"
+#line 949 "/home/alurin/workplace/project/martlet/source/core/lang/parser.cpp"
 
 
 /* Line 1138 of lalr1.cc  */
-#line 92 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
+#line 95 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
  /*** Additional Code ***/
 
-void apus::lang::ApusParser::error(const ApusParser::location_type& l,
+using namespace apus::lang;
+
+Location cast_to_location(const ApusParser::location_type& l) {
+    Position begin(l.begin.line, l.begin.column);
+    Position end(l.end.line, l.end.column);
+    Location loc(*l.begin.filename, begin, end);
+    return loc;
+}
+
+void ApusParser::error(const ApusParser::location_type& l,
 			    const std::string& m)
 {
-    // driver.error(l, m);
+    String message    = String::fromUTF8(m);
+    Location location = cast_to_location(l);
+    new LangException(message, location);
 }
 

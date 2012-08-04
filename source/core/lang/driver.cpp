@@ -46,9 +46,7 @@ Driver* Driver::createFromFile(const std::string& filename)
     std::ifstream* in = new std::ifstream(filename.c_str(), std::ios::binary | std::ios::in);
     if (!in->good()) {
         delete in;
-        BOOST_THROW_EXCEPTION(LangException()
-            << exception_message("File %s not found or not readable")
-            << exception_filename(filename));
+        throw LangException("File not found or not readable", Location(filename));
     }
     return new Driver(in, filename, true);
 }

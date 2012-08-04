@@ -76,12 +76,14 @@ namespace apus { namespace lang {
     {
 
 /* Line 35 of lalr1.cc  */
-#line 58 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
- 
+#line 59 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
+
+    semantic_type() { }
+
 
 
 /* Line 35 of lalr1.cc  */
-#line 85 "/home/alurin/workplace/project/martlet/source/core/lang/parser.hpp"
+#line 87 "/home/alurin/workplace/project/martlet/source/core/lang/parser.hpp"
     };
 #else
     typedef YYSTYPE semantic_type;
@@ -275,7 +277,7 @@ namespace apus { namespace lang {
 } } // apus::lang
 
 /* Line 35 of lalr1.cc  */
-#line 279 "/home/alurin/workplace/project/martlet/source/core/lang/parser.hpp"
+#line 281 "/home/alurin/workplace/project/martlet/source/core/lang/parser.hpp"
 
 
 

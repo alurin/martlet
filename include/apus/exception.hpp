@@ -8,22 +8,37 @@
 #define _APUS_EXCEPTION
 
 #include "apus/types.hpp"
-#include <boost/exception/all.hpp>
-#include <boost/format.hpp>
 #include <ostream>
 
 namespace apus {
-    /// Information about exception: current nam of file
-    typedef boost::error_info<struct tag_message, std::string>  exception_message;
-
     /// Base exception class for all Kiwi core exceptions
-    class Exception : virtual public boost::exception, public virtual std::exception {
+    /// @todo Create analog of Boost::Exception :(
+    class Exception : public virtual std::exception {
+    public:
+        /// Constructor
+        Exception();
+
+        /// Constructor with message
+        Exception(const String& message);
+
+        /// Destructor
+        virtual ~Exception() throw();
+
+        /// Return exception message
+        String getMessage() const;
+
+        /// Set exception message
+        void setMessage(const String& message);
+
+        /// Dump error to stream
+        virtual void dump(std::ostream& stream) const;
+    protected:
+        /// Error message
+        String mMessage;
     };
 
     /// output core information about exception in stream
     std::ostream& operator<<(std::ostream& stream, const Exception& ex);
-
-    #define exception_format(_format, _args) exception_message(boost::str(boost::format(_format) % _args ))
 }
 
 #endif

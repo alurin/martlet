@@ -82,6 +82,9 @@ namespace lang {
     class Node
     {
     public:
+        /// Enumeration for node indentificators
+        enum class NodeID : int32_t { };
+
         /// Destructor
         virtual ~Node();
 
@@ -94,6 +97,9 @@ namespace lang {
         /// Node constructor
         Node(Location& location);
     private:
+        /// Node class identificator
+        NodeID mNodeID;
+
         /// Location of node
         Location mLocation;
     };
