@@ -1,7 +1,7 @@
 /*
  *******************************************************************************
- *   Copyright (C) 2012 Vasiliy Sheredeko
- *   MIT license. All Rights Reserved.
+ *      Copyright (C) 2012 Vasiliy Sheredeko
+ *      MIT license. All Rights Reserved.
  *******************************************************************************
  */
 #include "apus/exception.hpp"

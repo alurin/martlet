@@ -37,6 +37,9 @@ namespace lang {
         /// Parse file
         Node* parse();
 
+        /// Returns stream name
+        std::string getStreamName() const;
+
         /// Send lexical or syntax error message to user
         void error(const Location& loc, const String& message);
     protected:

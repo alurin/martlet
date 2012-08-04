@@ -21,10 +21,10 @@ Driver::Driver(std::istream* stream, const std::string& streamName, bool hasOwne
 
 // Destructor
 Driver::~Driver() {
+    delete mLexer;
     if (mHasOwnership) {
-        delete this->mStream;
+        delete mStream;
     }
-    delete this->mLexer;
 }
 
 // create driver from stream
@@ -53,6 +53,13 @@ Driver* Driver::createFromFile(const std::string& filename)
     return new Driver(in, filename, true);
 }
 
+// returns stream name
+std::string Driver::getStreamName() const
+{
+    return mStreamName;
+}
+
+// parse stream
 Node* Driver::parse()
 {
     ApusParser parser(*this);
