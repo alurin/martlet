@@ -20,55 +20,55 @@
 ///==--------------------------------------------------------------------------------------------------------------==///
 /**
  * @def APUS_NAME
- * Name of Storm Fly engine
+ * Name of Martlet
  */
 #cmakedefine APUS_NAME               "@APUS_NAME@"
 
 /**
  * @def APUS_CODENAME
- * Lower case system name of Storm Fly engine
+ * Lower case system name of Martlet codename
  */
 #cmakedefine APUS_CODENAME           "@APUS_CODENAME@"
 
 /**
  * @def APUS_COPYRIGHT_YEARS
- * Copyright information about Storm Fly
+ * Copyright information about Martlet
  */
 #cmakedefine APUS_COPYRIGHT_YEARS    "@APUS_COPYRIGHT_YEARS@"
 
 /**
  * @def APUS_VERSION_MAJOR
- * Major number from Storm Fly version
+ * Major number from Martlet version
  */
 #cmakedefine APUS_VERSION_MAJOR      @APUS_VERSION_MAJOR@
 
 /**
  * @def APUS_VERSION_MINOR
- * Minor number from Storm Fly version
+ * Minor number from Martlet version
  */
 #cmakedefine APUS_VERSION_MINOR      @APUS_VERSION_MINOR@
 
 /**
  * @def APUS_VERSION_PATCH
- * Patch number from Storm Fly version
+ * Patch number from Martlet version
  */
 #cmakedefine APUS_VERSION_PATCH      @APUS_VERSION_PATCH@
 
 /**
  * @def APUS_VERSION_TYPE
- * Type of Storm Fly version
+ * Type of Martlet version
  */
 #cmakedefine APUS_VERSION_TYPE       "@APUS_VERSION_TYPE@"
 
 /**
  * @def APUS_VERSION_STRING
- * Storm Fly version string
+ * Martlet version string
  */
 #cmakedefine APUS_VERSION_STRING     "@APUS_VERSION_STRING@"
 
 /**
  * @def APUS_VERSION
- * Simple Storm Fly version without type and patch
+ * Simple Martlet version without type and patch
  */
 #cmakedefine APUS_VERSION            "@APUS_VERSION@"
 
