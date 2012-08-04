@@ -9,16 +9,3 @@
  * @file
  * This file contains main point for Martlet
  */
-
-// constructor
-Engine::Engine()
-{ }
-
-// destructor
-Engine::~Engine()
-{ }
-
-Engine::getModule(const String string)
-{
-
-}

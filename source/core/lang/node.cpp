@@ -4,7 +4,7 @@
  *      MIT license. All Rights Reserved.
  *******************************************************************************
  */
-#include "apus/lang/Node.hpp"
+#include "apus/lang/node.hpp"
 
 using namespace apus;
 using namespace apus::lang;
@@ -46,12 +46,24 @@ Location::Location()
 { }
 
 // location constructor
-Location::Location(String filename)
+Location::Location(const Path& filename)
 : mFilename(filename) { }
 
 // location constructor
-Location::Location(String filename, const Position& begin, const Position& end)
+Location::Location(const Path& filename, const Position& begin, const Position& end)
 : mFilename(filename), mBegin(begin), mEnd(end) { }
+
+// returns stream name
+Path Location::getFilename() const
+{
+    return mFilename;
+}
+
+// set stream name
+void Location::setFilename(const Path& filename)
+{
+    mFilename = filename;
+}
 
 // return begin
 Position Location::getBegin() const
@@ -82,7 +94,7 @@ Node::Node(Location& location)
 : mLocation(location) { }
 
 // node destructor
-virtual Node::~Node()
+Node::~Node()
 { }
 
 // returns location

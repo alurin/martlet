@@ -69,6 +69,11 @@ include (ExternalProject)
 include (UninstallTarget)
 include (DocumentationTargets)
 
+# global project dependencies
+FIND_PACKAGE (ICU REQUIRED)
+INCLUDE_DIRECTORIES(${ICU_INCLUDE_DIRS})
+LINK_DIRECTORIES(${ICU_LIBRARIES} ${ICU_I18N_LIBRARIES})
+
 # include subdirectories
 include_directories (${APUS_INCLUDE_DIR})
 add_subdirectory ("${APUS_SOURCE_DIR}/core")

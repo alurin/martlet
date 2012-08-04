@@ -7,6 +7,8 @@
 #ifndef _APUS_LANG_NODE
 #define _APUS_LANG_NODE
 
+#include "apus/types.hpp"
+
 namespace apus {
 namespace lang {
 
@@ -31,11 +33,11 @@ namespace lang {
         void setColumn(int32_t column);
     protected:
         /// Line number of position
-        int32_t mLine
+        int32_t mLine;
 
         /// Column number of position
         int32_t mColumn;
-    }
+    };
 
     class Location {
     public:
@@ -43,32 +45,38 @@ namespace lang {
         Location();
 
         /// Constructor
-        Location(String filename);
+        Location(const Path& filename);
 
         /// Constructor
-        Location(String filename, const Position& begin, const Position& end);
+        Location(const Path& filename, const Position& begin, const Position& end);
 
-        /// Return begin position of location
+        /// Returns stream name of location
+        Path getFilename() const;
+
+        /// Set stream name of location
+        void setFilename(const Path& filename);
+
+        /// Returns begin position of location
         Position getBegin() const;
 
         /// Set begin position of location
         void setBegin(Position begin);
 
-        /// Return end position of location
+        /// Returns end position of location
         Position getEnd() const;
 
         /// Set end position of location
         void setEnd(Position end);
     private:
         /// Filename
-        String mFilename
+        Path mFilename;
 
         /// Begin position of location
         Position mBegin;
 
         /// End position of location
         Position mEnd;
-    }
+    };
 
     /// Abstract syntax tree node
     class Node

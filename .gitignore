@@ -21,3 +21,6 @@ doc/api
 *.lai
 *.la
 *.a
+
+# Generated Files
+source/core/lang/parser.output

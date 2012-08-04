@@ -3,7 +3,7 @@ include_directories (${UnitTestPlusPlus_INCLUDE_DIRS})
 link_directories (${UnitTestPlusPlus_LIBRARY_DIRS})
 
 file (GLOB_RECURSE test_SRCS *.cpp *.cxx *.cc *.C *.c *.h *.hpp)
-set (test_LIBS ${Boost_LIBRARIES} ${UnitTestPlusPlus_LIBRARIES})
+set (test_LIBS ${Boost_LIBRARIES} ${UnitTestPlusPlus_LIBRARIES} apus)
 set (test_BIN ${PROJECT_NAME}-unittests)
 
 add_executable (${test_BIN} ${test_SRCS})
