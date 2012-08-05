@@ -1,36 +1,11 @@
 #!bin/apusc
 
-// Line comment
-# Line comment
-/* Multiline comment
- * Multiline comment
- * Multiline comment
- */
+namespace apus::example;
 
-if ($a) {
-
-}
-
-try {
-
-} catch (Exception $ex) {
-
-} catch {
-
-} else {
-
-} finally {
-
-}
-
-while ($a) {
-
-}
-
-for ($a = 0; $a < $b; ++$a) {
-
-}
-
-for ($a, $b : $b) {
-
+class Example
+{
+    user($a : string) : integer
+    {
+        $a = $a;
+    }
 }

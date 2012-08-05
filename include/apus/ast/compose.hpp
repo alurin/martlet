@@ -4,22 +4,23 @@
  *      MIT license. All Rights Reserved.
  *******************************************************************************
  */
-#ifndef _APUS_LANG_ARGUMENT
-#define _APUS_LANG_ARGUMENT
+#ifndef _APUS_LANG_COMPOSE
+#define _APUS_LANG_COMPOSE
 
-#include "apus/ast/mutable.hpp"
+#include "apus/ast/node.hpp"
 
 namespace apus {
 namespace ast {
-    class FunctionAst;
-    class TypeAst;
 
-    class ArgumentAst : public MutableAst
+    class FunctionAst;
+
+    class ComposeAst : public Node
     {
-        friend class FunctionAst;
-    private:
-        /// Constructor
-        ArgumentAst(FunctionAst* parent, const std::string& name, TypeAst* type, const Location& location);
+    public:
+        /// Add function in compose ast
+        void addFunction(FunctionAst* func);
+    protected:
+        ComposeAst(const Location& location);
     };
 
 }}

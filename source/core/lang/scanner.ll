@@ -68,6 +68,27 @@ typedef apus::lang::ApusParser::token_type token_type;
 
  /*** BEGIN RULES ***/
 
+ /* symbol tokens */
+"<<"                    { return token::OP_LSH;     }
+">>"                    { return token::OP_RSH;     }
+"||"                    { return token::OP_OR;      }
+"&&"                    { return token::OP_AND;     }
+"=="                    { return token::OP_EQ;      }
+"!="                    { return token::OP_NE;      }
+">="                    { return token::OP_GE;      }
+"<="                    { return token::OP_LE;      }
+"++"                    { return token::OP_INC;     }
+"--"                    { return token::OP_DEC;     }
+"+="                    { return token::OP_AADD;    }
+"-="                    { return token::OP_ASUB;    }
+"/="                    { return token::OP_ADIV;    }
+"*="                    { return token::OP_AMUL;    }
+"<<="                   { return token::OP_ASHL;    }
+">>="                   { return token::OP_ASHR;    }
+"&="                    { return token::OP_AAND;    }
+"|="                    { return token::OP_AOR;     }
+"::"                    { return token::DELIMITER;  }
+
  /* Lexems */
 "for"                   { return token::FOR;        }
 "while"                 { return token::WHILE;      }
@@ -78,6 +99,17 @@ typedef apus::lang::ApusParser::token_type token_type;
 "catch"                 { return token::CATCH;      }
 "finally"               { return token::FINALLY;    }
 "throw"                 { return token::THROW;      }
+
+"namespace"             { return token::NAMESPACE;  }
+"class"                 { return token::CLASS;      }
+
+ /* types */
+"integer"               { return token::INTEGER_TY; }
+"boolean"               { return token::BOOLEAN_TY; }
+"string"                { return token::STRING_TY;  }
+"char"                  { return token::CHAR_TY;    }
+"double"                { return token::DOUBLE_TY;  }
+"float"                 { return token::FLOAT_TY;   }
 
  /* comments and strings */
 "/*"                    { BEGIN(multiline_comment); }

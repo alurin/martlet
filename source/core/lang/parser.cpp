@@ -45,7 +45,7 @@
 /* User implementation prologue.  */
 
 /* Line 299 of lalr1.cc  */
-#line 85 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
+#line 136 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
 
 
 #include "apus/lang/driver.hpp"
@@ -258,7 +258,25 @@ namespace apus { namespace lang {
 
     switch (yytype)
       {
-  
+        case 4: /* "\"identifier\"" */
+
+/* Line 480 of lalr1.cc  */
+#line 132 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
+	{ delete (yyvaluep->stringVal); };
+
+/* Line 480 of lalr1.cc  */
+#line 269 "/home/alurin/workplace/project/martlet/source/core/lang/parser.cpp"
+	break;
+      case 5: /* "\"variable\"" */
+
+/* Line 480 of lalr1.cc  */
+#line 132 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
+	{ delete (yyvaluep->stringVal); };
+
+/* Line 480 of lalr1.cc  */
+#line 278 "/home/alurin/workplace/project/martlet/source/core/lang/parser.cpp"
+	break;
+
 	default:
 	  break;
       }
@@ -347,7 +365,7 @@ namespace apus { namespace lang {
     /* User initialization code.  */
     
 /* Line 565 of lalr1.cc  */
-#line 43 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
+#line 45 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
 {
     using namespace apus::ast;
     // initialize the initial location object
@@ -355,7 +373,7 @@ namespace apus { namespace lang {
 }
 
 /* Line 565 of lalr1.cc  */
-#line 359 "/home/alurin/workplace/project/martlet/source/core/lang/parser.cpp"
+#line 377 "/home/alurin/workplace/project/martlet/source/core/lang/parser.cpp"
 
     /* Initialize the stacks.  The initial state will be pushed in
        yynewstate, since the latter expects the semantical and the
@@ -471,31 +489,179 @@ namespace apus { namespace lang {
     YY_REDUCE_PRINT (yyn);
     switch (yyn)
       {
-	  case 2:
+	  case 5:
 
 /* Line 690 of lalr1.cc  */
-#line 115 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
+#line 176 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
+    {
+                                scopeStack.pushClass(new ClassAst(*(yysemantic_stack_[(2) - (2)].stringVal), (yylocation_stack_[(2) - (2)])));
+                                yyfree((yysemantic_stack_[(2) - (2)].stringVal));
+                            }
+    break;
+
+  case 6:
+
+/* Line 690 of lalr1.cc  */
+#line 181 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
+    { delete scopeStack.popClass(); }
+    break;
+
+  case 9:
+
+/* Line 690 of lalr1.cc  */
+#line 190 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
+    { scopeStack.peakClass()->addFunction((yysemantic_stack_[(1) - (1)].func));
+                                yyfree((yysemantic_stack_[(1) - (1)].func))  /// TODO: REMOVE THIS LINE
+                            }
+    break;
+
+  case 10:
+
+/* Line 690 of lalr1.cc  */
+#line 198 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
+    {
+                                FunctionAst* func = new FunctionAst(*(yysemantic_stack_[(1) - (1)].stringVal), (yylocation_stack_[(1) - (1)]));
+                                scopeStack.pushFunction(func);
+                                yyfree((yysemantic_stack_[(1) - (1)].stringVal));
+                            }
+    break;
+
+  case 11:
+
+/* Line 690 of lalr1.cc  */
+#line 204 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
+    {
+                                scopeStack.peakFunction()->setResultType((yysemantic_stack_[(7) - (7)].type));
+                            }
+    break;
+
+  case 12:
+
+/* Line 690 of lalr1.cc  */
+#line 207 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
+    {
+                                (yyval.func) = scopeStack.popFunction();
+                            }
+    break;
+
+  case 17:
+
+/* Line 690 of lalr1.cc  */
+#line 223 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
+    {
+                                scopeStack.peakFunction()->addArgument(*(yysemantic_stack_[(3) - (1)].stringVal), (yysemantic_stack_[(3) - (3)].type), (yylocation_stack_[(3) - (1)]));
+                                yyfree((yysemantic_stack_[(3) - (1)].stringVal));
+                            }
+    break;
+
+  case 18:
+
+/* Line 690 of lalr1.cc  */
+#line 230 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
+    {
+                            FunctionAst* parent       = scopeStack.peakFunction();
+                            ScopeStatementAst* scope  = new ScopeStatementAst(parent, (yylocation_stack_[(1) - (1)]));
+                            scopeStack.pushScope(scope);
+                        }
+    break;
+
+  case 19:
+
+/* Line 690 of lalr1.cc  */
+#line 235 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
+    {
+                            scopeStack.peakFunction()->setRootScope(scopeStack.popScope());
+                        }
+    break;
+
+  case 21:
+
+/* Line 690 of lalr1.cc  */
+#line 244 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
+    { (yyval.type) = new ArrayTypeAst((yysemantic_stack_[(2) - (1)].type), (yyloc)); }
+    break;
+
+  case 22:
+
+/* Line 690 of lalr1.cc  */
+#line 245 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
+    { (yyval.type) = new ArrayTypeAst((yysemantic_stack_[(3) - (1)].type), (yyloc)); }
+    break;
+
+  case 23:
+
+/* Line 690 of lalr1.cc  */
+#line 246 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
+    { (yyval.type) = (yysemantic_stack_[(1) - (1)].type); }
+    break;
+
+  case 24:
+
+/* Line 690 of lalr1.cc  */
+#line 251 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
+    { (yyval.type) = new IntegerTyAst((yylocation_stack_[(1) - (1)])); }
+    break;
+
+  case 25:
+
+/* Line 690 of lalr1.cc  */
+#line 252 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
+    { (yyval.type) = new BooleanTyAst((yylocation_stack_[(1) - (1)])); }
+    break;
+
+  case 26:
+
+/* Line 690 of lalr1.cc  */
+#line 253 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
+    { (yyval.type) = new StringTyAst((yylocation_stack_[(1) - (1)]));  }
+    break;
+
+  case 27:
+
+/* Line 690 of lalr1.cc  */
+#line 254 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
+    { (yyval.type) = new CharTyAst((yylocation_stack_[(1) - (1)]));    }
+    break;
+
+  case 28:
+
+/* Line 690 of lalr1.cc  */
+#line 255 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
+    { (yyval.type) = new DoubleTyAst((yylocation_stack_[(1) - (1)]));  }
+    break;
+
+  case 29:
+
+/* Line 690 of lalr1.cc  */
+#line 256 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
+    { (yyval.type) = new FloatTyAst((yylocation_stack_[(1) - (1)]));   }
+    break;
+
+  case 30:
+
+/* Line 690 of lalr1.cc  */
+#line 262 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
     { (yyval.statement) = 0;  }
     break;
 
-  case 3:
+  case 31:
 
 /* Line 690 of lalr1.cc  */
-#line 116 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
+#line 263 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
     { (yyval.statement) = (yysemantic_stack_[(1) - (1)].statement); }
     break;
 
-  case 4:
+  case 32:
 
 /* Line 690 of lalr1.cc  */
-#line 118 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
+#line 265 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
     { (yyval.statement) = (yysemantic_stack_[(2) - (1)].statement); }
     break;
 
-  case 5:
+  case 33:
 
 /* Line 690 of lalr1.cc  */
-#line 123 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
+#line 270 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
     {
                             ScopeStatementAst* parent = scopeStack.peakScope();
                             ScopeStatementAst* scope  = new ScopeStatementAst(parent, (yylocation_stack_[(1) - (1)]));
@@ -503,47 +669,47 @@ namespace apus { namespace lang {
                         }
     break;
 
-  case 6:
+  case 34:
 
 /* Line 690 of lalr1.cc  */
-#line 128 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
+#line 275 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
     {
                             (yyval.statement) = scopeStack.popScope();
                         }
     break;
 
-  case 13:
+  case 41:
 
 /* Line 690 of lalr1.cc  */
-#line 146 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
+#line 293 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
     { (yyval.statement) = new ExpressionStatementAst((yysemantic_stack_[(2) - (1)].rvalue)); }
     break;
 
-  case 14:
+  case 42:
 
 /* Line 690 of lalr1.cc  */
-#line 147 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
+#line 294 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
     { (yyval.statement) = (yysemantic_stack_[(2) - (1)].statement); }
     break;
 
-  case 15:
+  case 43:
 
 /* Line 690 of lalr1.cc  */
-#line 153 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
+#line 300 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
     { (yyval.statement) = 0; }
     break;
 
-  case 18:
+  case 46:
 
 /* Line 690 of lalr1.cc  */
-#line 164 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
+#line 311 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
     { (yyval.rvalue) = 0; }
     break;
 
-  case 20:
+  case 48:
 
 /* Line 690 of lalr1.cc  */
-#line 177 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
+#line 324 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
     {
             ForLoopAst* stmt = new ForLoopAst((yysemantic_stack_[(9) - (3)].statement), (yysemantic_stack_[(9) - (5)].rvalue), (yysemantic_stack_[(9) - (7)].statement), (yylocation_stack_[(9) - (1)]));
             stmt->append((yysemantic_stack_[(9) - (9)].statement));
@@ -551,10 +717,10 @@ namespace apus { namespace lang {
         }
     break;
 
-  case 21:
+  case 49:
 
 /* Line 690 of lalr1.cc  */
-#line 187 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
+#line 334 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
     {
             WhileLoopAst* stmt = new WhileLoopAst((yysemantic_stack_[(5) - (3)].rvalue), (yylocation_stack_[(5) - (1)]));
             stmt->append((yysemantic_stack_[(5) - (5)].statement));
@@ -562,63 +728,63 @@ namespace apus { namespace lang {
         }
     break;
 
-  case 30:
+  case 58:
 
 /* Line 690 of lalr1.cc  */
-#line 223 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
+#line 370 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
     { (yyval.rvalue) = new AssignAst((yysemantic_stack_[(3) - (1)].lvalue), (yysemantic_stack_[(3) - (3)].rvalue), (yyloc)); }
     break;
 
-  case 31:
+  case 59:
 
 /* Line 690 of lalr1.cc  */
-#line 224 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
+#line 371 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
     { (yyval.rvalue) = (yysemantic_stack_[(1) - (1)].rvalue); }
     break;
 
-  case 32:
+  case 60:
 
 /* Line 690 of lalr1.cc  */
-#line 229 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
+#line 376 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
     {
-                                            VariableAst* var = scopeStack.peakScope()->getVariable(*(yysemantic_stack_[(1) - (1)].stringVal));
+                                            MutableAst* var = scopeStack.peakScope()->getMutable(*(yysemantic_stack_[(1) - (1)].stringVal));
                                             yyfree((yysemantic_stack_[(1) - (1)].stringVal));
                                             if (var)
-                                                (yyval.lvalue) = new LVariableAst(var, (yyloc));
+                                                (yyval.lvalue) = new LMutableAst(var, (yyloc));
                                             else {
-                                                error((yylocation_stack_[(1) - (1)]), "Variable not defined");
+                                                error((yylocation_stack_[(1) - (1)]), "Variable or argument not found in current scope");
                                                 YYERROR;
                                             }
                                         }
     break;
 
-  case 33:
+  case 61:
 
 /* Line 690 of lalr1.cc  */
-#line 243 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
+#line 390 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
     {
-                                            VariableAst* var = scopeStack.peakScope()->getVariable(*(yysemantic_stack_[(1) - (1)].stringVal));
+                                            MutableAst* var = scopeStack.peakScope()->getMutable(*(yysemantic_stack_[(1) - (1)].stringVal));
                                             yyfree((yysemantic_stack_[(1) - (1)].stringVal));
                                             if (var)
-                                                (yyval.rvalue) = new RVariableAst(var, (yyloc));
+                                                (yyval.rvalue) = new RMutableAst(var, (yyloc));
                                             else {
-                                                error((yylocation_stack_[(1) - (1)]), "Variable not defined");
+                                                error((yylocation_stack_[(1) - (1)]), "Variable or argument not found in current scope");
                                                 YYERROR;
                                             }
                                         }
     break;
 
-  case 34:
+  case 62:
 
 /* Line 690 of lalr1.cc  */
-#line 253 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
+#line 400 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
     { (yyval.rvalue) = new IntegerConstantAst((yysemantic_stack_[(1) - (1)].integerVal), (yylocation_stack_[(1) - (1)])); }
     break;
 
 
 
 /* Line 690 of lalr1.cc  */
-#line 622 "/home/alurin/workplace/project/martlet/source/core/lang/parser.cpp"
+#line 788 "/home/alurin/workplace/project/martlet/source/core/lang/parser.cpp"
 	default:
           break;
       }
@@ -892,17 +1058,22 @@ namespace apus { namespace lang {
 
   /* YYPACT[STATE-NUM] -- Index in YYTABLE of the portion describing
      STATE-NUM.  */
-  const signed char ApusParser::yypact_ninf_ = -24;
+  const signed char ApusParser::yypact_ninf_ = -68;
   const signed char
   ApusParser::yypact_[] =
   {
-        48,   -24,   -15,   -24,   -11,    -9,    -8,     0,   -24,   -24,
-      12,   -24,    34,   -24,   -24,   -24,   -24,   -24,    -4,    -2,
-      -3,   -24,    17,    34,    -1,    -1,    10,    34,   -24,   -24,
-     -24,   -24,    -1,   -24,   -24,     4,     3,   -24,     5,    13,
-       7,   -24,    -1,    34,    34,   -24,   -24,   -24,     8,   -24,
-      18,    34,    11,    25,    18,     9,    -1,    34,   -24,    34,
-      24,   -24,   -24,    34,   -24
+        12,   -68,     9,    -1,    21,     2,   -33,    24,    30,   -68,
+       9,   -68,   -68,   -68,   -68,   -30,    28,   -68,   -29,    28,
+     -68,   -20,   -68,   -68,    41,   -17,   -14,   -68,   -13,    22,
+     -11,    41,   -68,   -68,   -68,   -68,   -68,   -68,   -68,   -36,
+      22,   -68,   -68,   -15,   -68,   -68,   -43,   -68,   -68,   -68,
+      -5,    14,   -68,    -2,     1,     3,    46,   -68,   -68,     0,
+     -68,    -5,   -68,   -68,   -68,   -68,   -68,     4,     5,    20,
+     -68,    -5,    18,    18,    50,    -5,   -68,   -68,   -68,   -68,
+      18,   -68,     6,     7,   -68,     8,    53,    10,   -68,    18,
+      -5,    -5,   -68,   -68,   -68,    13,   -68,    58,    -5,    17,
+      64,    58,    15,    18,    -5,   -68,    -5,    16,   -68,   -68,
+      -5,   -68
   };
 
   /* YYDEFACT[S] -- default reduction number in state S.  Performed when
@@ -911,58 +1082,71 @@ namespace apus { namespace lang {
   const unsigned char
   ApusParser::yydefact_[] =
   {
-         0,    35,    33,    34,     0,     0,     0,     0,    29,     5,
-       0,     7,     2,    12,     8,     9,    10,    11,     0,     0,
-       0,    31,     0,    15,     0,     0,     0,     2,    36,     4,
-      14,    13,     0,     1,    16,     0,     0,    17,     0,     0,
-       0,    30,    18,     2,     2,    28,     6,    19,     0,    21,
-      22,    15,     0,    23,    25,     0,     0,     2,    26,     2,
-       0,    24,    20,     2,    27
+         0,    63,     0,     0,     0,     3,     0,     0,     0,     1,
+       0,     4,     5,    64,     2,     0,     7,    10,     0,     7,
+       9,     0,     6,     8,    13,     0,     0,    14,    16,     0,
+       0,     0,    24,    25,    26,    27,    28,    29,    17,    23,
+       0,    15,    21,     0,    11,    22,     0,    20,    18,    12,
+      30,    61,    62,     0,     0,     0,     0,    57,    33,     0,
+      35,    30,    40,    36,    37,    38,    39,     0,     0,     0,
+      59,    43,     0,     0,     0,    30,    19,    32,    42,    41,
+       0,    44,     0,     0,    45,     0,     0,     0,    58,    46,
+      30,    30,    56,    34,    47,     0,    49,    50,    43,     0,
+      51,    53,     0,     0,    30,    54,    30,     0,    52,    48,
+      30,    55
   };
 
   /* YYPGOTO[NTERM-NUM].  */
   const signed char
   ApusParser::yypgoto_[] =
   {
-       -24,   -12,   -24,   -24,   -16,   -24,   -14,   -22,   -24,   -24,
-     -24,   -24,    14,   -24,   -24,   -24,   -23,   -24,   -24,   -24
+       -68,    59,   -68,   -68,   -68,    57,   -68,   -68,   -68,   -68,
+     -68,    49,   -68,   -68,   -68,    37,   -68,   -56,   -68,   -68,
+     -60,   -68,   -16,   -67,   -68,   -68,   -68,   -68,   -18,   -68,
+     -68,   -68,   -64,   -68,   -68,   -68
   };
 
   /* YYDEFGOTO[NTERM-NUM].  */
   const signed char
   ApusParser::yydefgoto_[] =
   {
-        -1,    10,    11,    27,    12,    13,    35,    36,    48,    14,
-      15,    16,    53,    54,    17,    18,    19,    20,    21,    22
+        -1,     6,     3,     8,    15,    18,    19,    20,    21,    46,
+      26,    27,    28,    49,    50,    38,    39,    59,    60,    75,
+      61,    62,    82,    83,    95,    63,    64,    65,   100,   101,
+      66,    67,    68,    69,    70,     4
   };
 
   /* YYTABLE[YYPACT[STATE-NUM]].  What to do in state STATE-NUM.  If
      positive, shift that token.  If negative, reduce the rule which
      number is the opposite.  If YYTABLE_NINF_, syntax error.  */
-  const signed char ApusParser::yytable_ninf_ = -33;
+  const signed char ApusParser::yytable_ninf_ = -61;
   const signed char
   ApusParser::yytable_[] =
   {
-        29,    37,    37,    38,     2,     3,   -32,    34,    23,    41,
-      24,    25,    28,    26,    30,    40,    31,    33,    32,    37,
-      47,    39,    42,    43,    46,    44,    51,    45,    52,    59,
-      56,    49,    50,    37,    60,    34,    57,    55,     0,     2,
-       3,     4,     5,     6,    63,    61,     7,    62,     1,     8,
-       9,    64,     0,     2,     3,     4,     5,     6,     0,     0,
-       7,     0,     0,     8,     9,     0,     0,     0,    58
+        51,    52,    53,    54,    55,    77,    85,    56,    84,    84,
+      57,    81,     1,     5,    42,     7,    88,    47,    48,    87,
+      43,     9,    94,    51,    52,    84,    10,    11,    12,     2,
+      13,    16,    17,    22,    96,    97,   107,    24,    81,    84,
+      32,    33,    34,    35,    36,    37,    25,    29,   108,    30,
+     109,    45,    31,    40,   111,    71,    58,   -60,    72,    74,
+      73,    86,    76,    80,    78,    79,    89,    92,    99,    14,
+      90,    91,    93,    98,   103,   104,    23,    44,   106,   110,
+      41,     0,   102,   105
   };
 
   /* YYCHECK.  */
   const signed char
   ApusParser::yycheck_[] =
   {
-        12,    24,    25,    25,     5,     6,    21,    23,    19,    32,
-      19,    19,     0,    13,    18,    27,    18,     0,    21,    42,
-      42,    11,    18,    20,    17,    20,    18,    14,    10,    20,
-      19,    43,    44,    56,    56,    51,    11,    51,    -1,     5,
-       6,     7,     8,     9,    20,    57,    12,    59,     0,    15,
-      16,    63,    -1,     5,     6,     7,     8,     9,    -1,    -1,
-      12,    -1,    -1,    15,    16,    -1,    -1,    -1,    54
+         5,     6,     7,     8,     9,    61,    73,    12,    72,    73,
+      15,    71,     0,     4,    50,    16,    80,    60,    61,    75,
+      56,     0,    89,     5,     6,    89,    24,    60,     4,    17,
+       0,    61,     4,    62,    90,    91,   103,    57,    98,   103,
+      18,    19,    20,    21,    22,    23,     5,    64,   104,    63,
+     106,    66,    65,    64,   110,    57,    61,    43,    57,    13,
+      57,    11,    62,    43,    60,    60,    60,    14,    10,    10,
+      63,    63,    62,    60,    57,    11,    19,    40,    63,    63,
+      31,    -1,    98,   101
   };
 
   /* STOS_[STATE-NUM] -- The (internal number of the) accessing
@@ -970,13 +1154,18 @@ namespace apus { namespace lang {
   const unsigned char
   ApusParser::yystos_[] =
   {
-         0,     0,     5,     6,     7,     8,     9,    12,    15,    16,
-      23,    24,    26,    27,    31,    32,    33,    36,    37,    38,
-      39,    40,    41,    19,    19,    19,    13,    25,     0,    23,
-      18,    18,    21,     0,    26,    28,    29,    38,    29,    11,
-      23,    38,    18,    20,    20,    14,    17,    29,    30,    23,
-      23,    18,    10,    34,    35,    28,    19,    11,    34,    20,
-      29,    23,    23,    20,    23
+         0,     0,    17,    69,   102,     4,    68,    16,    70,     0,
+      24,    60,     4,     0,    68,    71,    61,     4,    72,    73,
+      74,    75,    62,    72,    57,     5,    77,    78,    79,    64,
+      63,    65,    18,    19,    20,    21,    22,    23,    82,    83,
+      64,    78,    50,    56,    82,    66,    76,    60,    61,    80,
+      81,     5,     6,     7,     8,     9,    12,    15,    61,    84,
+      85,    87,    88,    92,    93,    94,    97,    98,    99,   100,
+     101,    57,    57,    57,    13,    86,    62,    84,    60,    60,
+      43,    87,    89,    90,    99,    90,    11,    84,    99,    60,
+      63,    63,    14,    62,    90,    91,    84,    84,    60,    10,
+      95,    96,    89,    57,    11,    95,    63,    90,    84,    84,
+      63,    84
   };
 
 #if YYDEBUG
@@ -986,8 +1175,12 @@ namespace apus { namespace lang {
   ApusParser::yytoken_number_[] =
   {
          0,   256,   257,   258,   259,   260,   261,   262,   263,   264,
-     265,   266,   267,   268,   269,   270,   123,   125,    59,    40,
-      41,    61
+     265,   266,   267,   268,   269,   270,   271,   272,   273,   274,
+     275,   276,   277,   278,   279,   280,   281,   282,   283,   284,
+     285,   286,   287,   288,   289,   290,   291,   292,   293,   294,
+     295,   296,   297,    61,   124,    38,    60,    62,    45,    43,
+      42,    47,    37,    33,   298,    46,    91,    40,   299,   300,
+      59,   123,   125,    41,    58,    44,    93
   };
 #endif
 
@@ -995,20 +1188,26 @@ namespace apus { namespace lang {
   const unsigned char
   ApusParser::yyr1_[] =
   {
-         0,    22,    23,    23,    23,    25,    24,    26,    26,    26,
-      26,    26,    26,    27,    27,    28,    28,    29,    30,    30,
-      31,    32,    33,    33,    33,    34,    34,    35,    36,    37,
-      38,    38,    39,    40,    40,    41,    41
+         0,    67,    68,    68,    69,    71,    70,    72,    72,    73,
+      75,    76,    74,    77,    77,    78,    78,    79,    81,    80,
+      80,    82,    82,    82,    83,    83,    83,    83,    83,    83,
+      84,    84,    84,    86,    85,    87,    87,    87,    87,    87,
+      87,    88,    88,    89,    89,    90,    91,    91,    92,    93,
+      94,    94,    94,    95,    95,    96,    97,    98,    99,    99,
+     100,   101,   101,   102,   102
   };
 
   /* YYR2[YYN] -- Number of symbols composing right hand side of rule YYN.  */
   const unsigned char
   ApusParser::yyr2_[] =
   {
-         0,     2,     0,     1,     2,     0,     4,     1,     1,     1,
-       1,     1,     1,     2,     2,     0,     1,     1,     0,     1,
-       9,     5,     5,     6,     8,     0,     2,     5,     4,     1,
-       3,     1,     1,     1,     1,     1,     2
+         0,     2,     3,     1,     3,     0,     6,     0,     2,     1,
+       0,     0,     9,     0,     1,     3,     1,     3,     0,     4,
+       1,     2,     3,     1,     1,     1,     1,     1,     1,     1,
+       0,     1,     2,     0,     4,     1,     1,     1,     1,     1,
+       1,     2,     2,     0,     1,     1,     0,     1,     9,     5,
+       5,     6,     8,     0,     2,     5,     4,     1,     3,     1,
+       1,     1,     1,     1,     3
   };
 
 #if YYDEBUG || YYERROR_VERBOSE || YYTOKEN_TABLE
@@ -1018,10 +1217,20 @@ namespace apus { namespace lang {
   const ApusParser::yytname_[] =
   {
     "\"end of file\"", "error", "$undefined", "\"end of line\"",
-  "\"identifier\"", "\"variable\"", "\"integer\"", "\"for\"", "\"while\"",
-  "\"if\"", "\"elseif\"", "\"else\"", "\"try\"", "\"catch\"",
-  "\"finally\"", "\"throw\"", "'{'", "'}'", "';'", "'('", "')'", "'='",
-  "$accept", "statements", "scope", "$@1", "statement", "line_statement",
+  "\"identifier\"", "\"variable\"", "\"integer constant\"", "\"for\"",
+  "\"while\"", "\"if\"", "\"elseif\"", "\"else\"", "\"try\"", "\"catch\"",
+  "\"finally\"", "\"throw\"", "\"class\"", "\"namespace\"", "\"integer\"",
+  "\"boolean\"", "\"string\"", "\"char\"", "\"double\"", "\"float\"",
+  "\"::\"", "\"<<\"", "\">>\"", "\"||\"", "\"&&\"", "\"==\"", "\"!=\"",
+  "\">=\"", "\"<=\"", "\"++\"", "\"--\"", "\"+=\"", "\"-=\"", "\"/=\"",
+  "\"*=\"", "\"<<=\"", "\">>=\"", "\"&=\"", "\"|=\"", "'='", "'|'", "'&'",
+  "'<'", "'>'", "'-'", "'+'", "'*'", "'/'", "'%'", "'!'", "UNARY", "'.'",
+  "'['", "'('", "PRE", "MINIM", "';'", "'{'", "'}'", "')'", "':'", "','",
+  "']'", "$accept", "qual_identifier", "namespace_declare",
+  "class_declare", "$@1", "class_body", "class_element",
+  "function_declare", "$@2", "$@3", "function_args_empty", "function_args",
+  "function_arg", "function_body", "$@4", "type", "simple_type",
+  "statements", "scope", "$@5", "statement", "line_statement",
   "empty_statement", "conditional", "empty_conditional", "for_loop",
   "while_loop", "if_statement", "elseif_parts", "elseif_part",
   "try_statement", "exception_statement", "expression", "lvalue", "rvalue",
@@ -1034,18 +1243,26 @@ namespace apus { namespace lang {
   const ApusParser::rhs_number_type
   ApusParser::yyrhs_[] =
   {
-        41,     0,    -1,    -1,    26,    -1,    26,    23,    -1,    -1,
-      16,    25,    23,    17,    -1,    24,    -1,    31,    -1,    32,
-      -1,    33,    -1,    36,    -1,    27,    -1,    38,    18,    -1,
-      37,    18,    -1,    -1,    26,    -1,    38,    -1,    -1,    29,
-      -1,     7,    19,    28,    18,    30,    18,    28,    20,    23,
-      -1,     8,    19,    29,    20,    23,    -1,     9,    19,    29,
-      20,    23,    -1,     9,    19,    29,    20,    23,    34,    -1,
-       9,    19,    29,    20,    23,    34,    11,    23,    -1,    -1,
-      35,    34,    -1,    10,    19,    29,    20,    23,    -1,    12,
-      13,    11,    14,    -1,    15,    -1,    39,    21,    38,    -1,
-      40,    -1,     5,    -1,     5,    -1,     6,    -1,     0,    -1,
-      23,     0,    -1
+       102,     0,    -1,     4,    24,    68,    -1,     4,    -1,    17,
+      68,    60,    -1,    -1,    16,     4,    71,    61,    72,    62,
+      -1,    -1,    73,    72,    -1,    74,    -1,    -1,    -1,     4,
+      75,    57,    77,    63,    64,    82,    76,    80,    -1,    -1,
+      78,    -1,    79,    65,    78,    -1,    79,    -1,     5,    64,
+      82,    -1,    -1,    61,    81,    84,    62,    -1,    60,    -1,
+      83,    50,    -1,    83,    56,    66,    -1,    83,    -1,    18,
+      -1,    19,    -1,    20,    -1,    21,    -1,    22,    -1,    23,
+      -1,    -1,    87,    -1,    87,    84,    -1,    -1,    61,    86,
+      84,    62,    -1,    85,    -1,    92,    -1,    93,    -1,    94,
+      -1,    97,    -1,    88,    -1,    99,    60,    -1,    98,    60,
+      -1,    -1,    87,    -1,    99,    -1,    -1,    90,    -1,     7,
+      57,    89,    60,    91,    60,    89,    63,    84,    -1,     8,
+      57,    90,    63,    84,    -1,     9,    57,    90,    63,    84,
+      -1,     9,    57,    90,    63,    84,    95,    -1,     9,    57,
+      90,    63,    84,    95,    11,    84,    -1,    -1,    96,    95,
+      -1,    10,    57,    90,    63,    84,    -1,    12,    13,    11,
+      14,    -1,    15,    -1,   100,    43,    99,    -1,   101,    -1,
+       5,    -1,     5,    -1,     6,    -1,     0,    -1,    69,    70,
+       0,    -1
   };
 
   /* YYPRHS[YYN] -- Index of the first RHS symbol of rule number YYN in
@@ -1053,20 +1270,26 @@ namespace apus { namespace lang {
   const unsigned char
   ApusParser::yyprhs_[] =
   {
-         0,     0,     3,     4,     6,     9,    10,    15,    17,    19,
-      21,    23,    25,    27,    30,    33,    34,    36,    38,    39,
-      41,    51,    57,    63,    70,    79,    80,    83,    89,    94,
-      96,   100,   102,   104,   106,   108,   110
+         0,     0,     3,     7,     9,    13,    14,    21,    22,    25,
+      27,    28,    29,    39,    40,    42,    46,    48,    52,    53,
+      58,    60,    63,    67,    69,    71,    73,    75,    77,    79,
+      81,    82,    84,    87,    88,    93,    95,    97,    99,   101,
+     103,   105,   108,   111,   112,   114,   116,   117,   119,   129,
+     135,   141,   148,   157,   158,   161,   167,   172,   174,   178,
+     180,   182,   184,   186,   188
   };
 
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
   const unsigned short int
   ApusParser::yyrline_[] =
   {
-         0,   115,   115,   116,   117,   123,   123,   136,   137,   138,
-     139,   140,   141,   146,   147,   153,   154,   159,   164,   165,
-     176,   186,   196,   197,   198,   201,   203,   207,   212,   217,
-     223,   224,   229,   243,   253,   258,   259
+         0,   165,   165,   166,   172,   176,   176,   184,   186,   190,
+     198,   204,   198,   212,   214,   218,   219,   223,   230,   230,
+     238,   244,   245,   246,   251,   252,   253,   254,   255,   256,
+     262,   263,   264,   270,   270,   283,   284,   285,   286,   287,
+     288,   293,   294,   300,   301,   306,   311,   312,   323,   333,
+     343,   344,   345,   348,   350,   354,   359,   364,   370,   371,
+     376,   390,   400,   405,   406
   };
 
   // Print the state stack on the debug stream.
@@ -1109,16 +1332,16 @@ namespace apus { namespace lang {
            0,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-      19,    20,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     2,     2,     2,    18,
-       2,    21,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
+       2,     2,     2,    53,     2,     2,     2,    52,    45,     2,
+      57,    63,    50,    49,    65,    48,    55,    51,     2,     2,
+       2,     2,     2,     2,     2,     2,     2,     2,    64,    60,
+      46,    43,    47,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
+       2,    56,     2,    66,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,    16,     2,    17,     2,     2,     2,     2,
+       2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
+       2,     2,     2,    61,    44,    62,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
@@ -1133,7 +1356,10 @@ namespace apus { namespace lang {
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
        5,     6,     7,     8,     9,    10,    11,    12,    13,    14,
-      15
+      15,    16,    17,    18,    19,    20,    21,    22,    23,    24,
+      25,    26,    27,    28,    29,    30,    31,    32,    33,    34,
+      35,    36,    37,    38,    39,    40,    41,    42,    54,    58,
+      59
     };
     if ((unsigned int) t <= yyuser_token_number_max_)
       return translate_table[t];
@@ -1142,26 +1368,26 @@ namespace apus { namespace lang {
   }
 
   const int ApusParser::yyeof_ = 0;
-  const int ApusParser::yylast_ = 68;
-  const int ApusParser::yynnts_ = 20;
+  const int ApusParser::yylast_ = 83;
+  const int ApusParser::yynnts_ = 36;
   const int ApusParser::yyempty_ = -2;
-  const int ApusParser::yyfinal_ = 33;
+  const int ApusParser::yyfinal_ = 9;
   const int ApusParser::yyterror_ = 1;
   const int ApusParser::yyerrcode_ = 256;
-  const int ApusParser::yyntokens_ = 22;
+  const int ApusParser::yyntokens_ = 67;
 
-  const unsigned int ApusParser::yyuser_token_number_max_ = 270;
+  const unsigned int ApusParser::yyuser_token_number_max_ = 300;
   const ApusParser::token_number_type ApusParser::yyundef_token_ = 2;
 
 
 } } // apus::lang
 
 /* Line 1136 of lalr1.cc  */
-#line 1161 "/home/alurin/workplace/project/martlet/source/core/lang/parser.cpp"
+#line 1387 "/home/alurin/workplace/project/martlet/source/core/lang/parser.cpp"
 
 
 /* Line 1138 of lalr1.cc  */
-#line 264 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
+#line 411 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
  /*** Additional Code ***/
 
 using namespace apus;

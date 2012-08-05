@@ -9,6 +9,8 @@
 
 #include "apus/ast/node.hpp"
 #include "apus/ast/scope.hpp"
+#include "apus/ast/function.hpp"
+#include "apus/ast/class.hpp"
 #include <stack>
 
 namespace apus {
@@ -23,8 +25,22 @@ namespace lang {
 
         ast::ScopeStatementAst* popScope();
 
+        ast::FunctionAst* peakFunction() const;
+
+        void pushFunction(ast::FunctionAst* func);
+
+        ast::FunctionAst* popFunction();
+
+        ast::ClassAst* peakClass() const;
+
+        void pushClass(ast::ClassAst* cls);
+
+        ast::ClassAst* popClass();
+
     protected:
         std::stack<ast::ScopeStatementAst*> mScopesStack;
+        std::stack<ast::FunctionAst*>       mFunctionsStack;
+        std::stack<ast::ClassAst*>          mClassesStack;
     };
 }}
 

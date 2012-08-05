@@ -7,11 +7,13 @@
 #ifndef _APUS_LANG_LOOP
 #define _APUS_LANG_LOOP
 
-#include "apus/ast/statement.hpp"
+#include "apus/ast/scope.hpp"
 
 namespace apus {
 namespace ast {
     class RightValueAst;
+
+    class LoopAst : public ScopeStatementAst { }
 
     class WhileLoopAst : public SequenceStatementAst {
     public:

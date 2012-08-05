@@ -10,6 +10,8 @@
 #include "apus/lang/exception.hpp"
 #include "apus/ast/statement.hpp"
 #include "apus/ast/expression.hpp"
+#include "apus/ast/function.hpp"
+#include "apus/ast/type.hpp"
 
 }
 
@@ -63,13 +65,15 @@
     apus::ast::StatementAst*    statement;
     apus::ast::LeftValueAst*    lvalue;
     apus::ast::RightValueAst*   rvalue;
+    apus::ast::FunctionAst*     func;
+    apus::ast::TypeAst*         type;
 }
 
 %token                  END             0   "end of file"
 %token                  EOL                 "end of line"
-%token                  IDENTIFIER          "identifier"
+%token <stringVal>      IDENTIFIER          "identifier"
 %token <stringVal>      VARIABLE            "variable"
-%token <integerVal>     INTEGER             "integer"
+%token <integerVal>     INTEGER             "integer constant"
 %token                  FOR                 "for"
 %token                  WHILE               "while"
 %token                  IF                  "if"
@@ -79,6 +83,53 @@
 %token                  CATCH               "catch"
 %token                  FINALLY             "finally"
 %token                  THROW               "throw"
+
+%token                  CLASS               "class"
+%token                  NAMESPACE           "namespace"
+
+%token                  INTEGER_TY          "integer"
+%token                  BOOLEAN_TY          "boolean"
+%token                  STRING_TY           "string"
+%token                  CHAR_TY             "char"
+%token                  DOUBLE_TY           "double"
+%token                  FLOAT_TY            "float"
+
+%token                  DELIMITER            "::"
+%token                  OP_LSH              "<<"
+%token                  OP_RSH              ">>"
+%token                  OP_OR               "||"
+%token                  OP_AND              "&&"
+%token                  OP_EQ               "=="
+%token                  OP_NE               "!="
+%token                  OP_GE               ">="
+%token                  OP_LE               "<="
+%token                  OP_INC              "++"
+%token                  OP_DEC              "--"
+%token                  OP_AADD             "+="
+%token                  OP_ASUB             "-="
+%token                  OP_ADIV             "/="
+%token                  OP_AMUL             "*="
+%token                  OP_ASHL             "<<="
+%token                  OP_ASHR             ">>="
+%token                  OP_AAND             "&="
+%token                  OP_AOR              "|="
+
+%left       '=' "+=" "-=" "/=" "*=" "<<=" ">>=" "&=" "|="
+%left       "||"
+%left       "&&"
+%left       '|'
+//%left       '^'
+%left       '&'
+%nonassoc   "==" "!="
+%nonassoc   '<' '>' "<=" ">="
+%left       ">>" "<<"
+%left       '-' '+'
+%left       '*' '/' '%'
+%right      UNARY '!'
+%right      PRE '.' '[' '('
+%nonassoc   MINIM
+
+%destructor { delete $$; } IDENTIFIER VARIABLE
 
  /*** END EXAMPLE - Change the example grammar's tokens above ***/
 
@@ -110,12 +161,107 @@ using namespace apus::ast;
 
 %% /*** Grammar Rules ***/
 
+qual_identifier
+    : IDENTIFIER DELIMITER qual_identifier
+    | IDENTIFIER
+    ;
+
+/** COMPOSE: CLASSES AND E.T.C **/
+
+namespace_declare
+    : NAMESPACE qual_identifier ';'
+    ;
+
+class_declare
+    : CLASS IDENTIFIER      {
+                                scopeStack.pushClass(new ClassAst(*$2, @2));
+                                yyfree($2);
+                            }
+        '{' class_body '}'
+                            { delete scopeStack.popClass(); }
+    ;
+
+class_body
+    : /* empty */
+    | class_element class_body
+    ;
+
+class_element
+    : function_declare      { scopeStack.peakClass()->addFunction($1);
+                                yyfree($1)  /// TODO: REMOVE THIS LINE
+                            }
+    ;
+
+/** FUNCTIONS **/
+%type <func> function_declare;
+function_declare
+    : IDENTIFIER            {
+                                FunctionAst* func = new FunctionAst(*$1, @1);
+                                scopeStack.pushFunction(func);
+                                yyfree($1);
+                            }
+        '(' function_args_empty ')'
+        ':' type            {
+                                scopeStack.peakFunction()->setResultType($7);
+                            }
+        function_body       {
+                                $$ = scopeStack.popFunction();
+                            }
+    ;
+
+function_args_empty
+    : /* empty */
+    | function_args
+    ;
+
+function_args
+    : function_arg ',' function_args
+    | function_arg
+    ;
+
+function_arg
+    : VARIABLE ':' type     {
+                                scopeStack.peakFunction()->addArgument(*$1, $3, @1);
+                                yyfree($1);
+                            }
+    ;
+
+function_body
+    : '{'               {
+                            FunctionAst* parent       = scopeStack.peakFunction();
+                            ScopeStatementAst* scope  = new ScopeStatementAst(parent, @1);
+                            scopeStack.pushScope(scope);
+                        }
+        statements '}'  {
+                            scopeStack.peakFunction()->setRootScope(scopeStack.popScope());
+                        }
+    | ';'
+    ;
+
+/** TYPES **/
+%type <type> type;
+type
+    : simple_type '*'       { $$ = new ArrayTypeAst($1, @$); }
+    | simple_type '[' ']'   { $$ = new ArrayTypeAst($1, @$); }
+    | simple_type           { $$ = $1; }
+    ;
+
+%type <type> simple_type;
+simple_type
+    : INTEGER_TY            { $$ = new IntegerTyAst(@1); }
+    | BOOLEAN_TY            { $$ = new BooleanTyAst(@1); }
+    | STRING_TY             { $$ = new StringTyAst(@1);  }
+    | CHAR_TY               { $$ = new CharTyAst(@1);    }
+    | DOUBLE_TY             { $$ = new DoubleTyAst(@1);  }
+    | FLOAT_TY              { $$ = new FloatTyAst(@1);   }
+    ;
+
+/** STATEMENTS **/
 %type <statement> statements;
 statements
-    : /* empty */           { $$ = 0;  }
-    | statement             { $$ = $1; }
-    | statement
-        statements          { $$ = $1; }
+    : /* empty */
+    | statement             {  }
+        statements
     ;
 
 %type <statement> scope;
@@ -183,12 +329,14 @@ for_loop
 
 %type <statement> while_loop;
 while_loop
-    : WHILE '(' conditional ')' statements
-        {
-            WhileLoopAst* stmt = new WhileLoopAst($3, @1);
-            stmt->append($5);
-            $$ = stmt;
-        }
+    : WHILE                             {
+                                            WhileLoopAst* stmt = new WhileLoopAst($3, @1);
+                                            $$ = stmt;
+
+                                        }
+        '(' conditional ')' statements  {
+                                            scopeStack.pushSequence();
+                                        }
     ;
 
 %type <statement> if_statement;
@@ -227,12 +375,12 @@ expression
 %type <lvalue> lvalue;
 lvalue
     : VARIABLE                          {
-                                            VariableAst* var = scopeStack.peakScope()->getVariable(*$1);
+                                            MutableAst* var = scopeStack.peakScope()->getMutable(*$1);
                                             yyfree($1);
                                             if (var)
-                                                $$ = new LVariableAst(var, @$);
+                                                $$ = new LMutableAst(var, @$);
                                             else {
-                                                error(@1, "Variable not defined");
+                                                error(@1, "Variable or argument not found in current scope");
                                                 YYERROR;
                                             }
                                         }
@@ -241,12 +389,12 @@ lvalue
 %type <rvalue> rvalue;
 rvalue
     : VARIABLE                          {
-                                            VariableAst* var = scopeStack.peakScope()->getVariable(*$1);
+                                            MutableAst* var = scopeStack.peakScope()->getMutable(*$1);
                                             yyfree($1);
                                             if (var)
-                                                $$ = new RVariableAst(var, @$);
+                                                $$ = new RMutableAst(var, @$);
                                             else {
-                                                error(@1, "Variable not defined");
+                                                error(@1, "Variable or argument not found in current scope");
                                                 YYERROR;
                                             }
                                         }
@@ -256,7 +404,7 @@ rvalue
 /** START POINT **/
 start
     : END /* empty */
-    | statements END
+    | namespace_declare class_declare END
     ;
 
 /*** END GRAMAR - Change the example grammar rules above ***/

@@ -45,12 +45,14 @@
 #include "apus/lang/exception.hpp"
 #include "apus/ast/statement.hpp"
 #include "apus/ast/expression.hpp"
+#include "apus/ast/function.hpp"
+#include "apus/ast/type.hpp"
 
 
 
 
 /* Line 35 of lalr1.cc  */
-#line 54 "/home/alurin/workplace/project/martlet/source/core/lang/parser.hpp"
+#line 56 "/home/alurin/workplace/project/martlet/source/core/lang/parser.hpp"
 
 
 #include <string>
@@ -80,7 +82,7 @@
 namespace apus { namespace lang {
 
 /* Line 35 of lalr1.cc  */
-#line 84 "/home/alurin/workplace/project/martlet/source/core/lang/parser.hpp"
+#line 86 "/home/alurin/workplace/project/martlet/source/core/lang/parser.hpp"
 
   /// A Bison parser.
   class ApusParser
@@ -92,18 +94,20 @@ namespace apus { namespace lang {
     {
 
 /* Line 35 of lalr1.cc  */
-#line 60 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
+#line 62 "/home/alurin/workplace/project/martlet/source/core/lang/parser.yy"
 
     std::string*                stringVal;
     int32_t                     integerVal;
     apus::ast::StatementAst*    statement;
     apus::ast::LeftValueAst*    lvalue;
     apus::ast::RightValueAst*   rvalue;
+    apus::ast::FunctionAst*     func;
+    apus::ast::TypeAst*         type;
 
 
 
 /* Line 35 of lalr1.cc  */
-#line 107 "/home/alurin/workplace/project/martlet/source/core/lang/parser.hpp"
+#line 111 "/home/alurin/workplace/project/martlet/source/core/lang/parser.hpp"
     };
 #else
     typedef YYSTYPE semantic_type;
@@ -128,7 +132,37 @@ namespace apus { namespace lang {
      TRY = 267,
      CATCH = 268,
      FINALLY = 269,
-     THROW = 270
+     THROW = 270,
+     CLASS = 271,
+     NAMESPACE = 272,
+     INTEGER_TY = 273,
+     BOOLEAN_TY = 274,
+     STRING_TY = 275,
+     CHAR_TY = 276,
+     DOUBLE_TY = 277,
+     FLOAT_TY = 278,
+     DELIMITER = 279,
+     OP_LSH = 280,
+     OP_RSH = 281,
+     OP_OR = 282,
+     OP_AND = 283,
+     OP_EQ = 284,
+     OP_NE = 285,
+     OP_GE = 286,
+     OP_LE = 287,
+     OP_INC = 288,
+     OP_DEC = 289,
+     OP_AADD = 290,
+     OP_ASUB = 291,
+     OP_ADIV = 292,
+     OP_AMUL = 293,
+     OP_ASHL = 294,
+     OP_ASHR = 295,
+     OP_AAND = 296,
+     OP_AOR = 297,
+     UNARY = 298,
+     PRE = 299,
+     MINIM = 300
    };
 
     };
@@ -309,7 +343,7 @@ namespace apus { namespace lang {
 } } // apus::lang
 
 /* Line 35 of lalr1.cc  */
-#line 313 "/home/alurin/workplace/project/martlet/source/core/lang/parser.hpp"
+#line 347 "/home/alurin/workplace/project/martlet/source/core/lang/parser.hpp"
 
 
 
