@@ -13,7 +13,7 @@ namespace apus {
 namespace ast {
     class RightValueAst;
 
-    class LoopAst : public ScopeStatementAst { }
+    class LoopAst : public ScopeStatementAst { };
 
     class WhileLoopAst : public SequenceStatementAst {
     public:
@@ -23,6 +23,7 @@ namespace ast {
     protected:
         RightValueAst* mConditional;
     };
+
     class ForLoopAst : public SequenceStatementAst {
     public:
         ForLoopAst(StatementAst* initial, RightValueAst* conditional, StatementAst* after, const Location& loc);

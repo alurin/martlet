@@ -22,6 +22,9 @@ doc/api
 *.la
 *.a
 
+# Sublime Text project files
+/*.sublime-*
+
 # Generated Files
 source/core/lang/parser.output
 include/apus/platform.hpp
